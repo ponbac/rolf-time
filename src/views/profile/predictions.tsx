@@ -15,7 +15,7 @@ const PredictedGroup = (props: PredictedGroupProps) => {
   const TeamItem = (props: { team: Team; placing: number; key: string }) => {
     return (
       <div
-        className="gap-2 w-56 hover:bg-primary/30 transition-all mx-2 flex flex-row items-center font-mono bg-gray-400/30 backdrop-blur-sm py-2 px-4 rounded-lg"
+        className="gap-2 w-64 hover:bg-primary/30 transition-all mx-2 flex flex-row items-center font-mono bg-gray-400/30 backdrop-blur-sm py-2 px-4 rounded-lg"
         key={props.key}
       >
         <p className={"font-bold"}>{props.placing}.</p>

@@ -21,7 +21,7 @@ export const TeamBlock: FC<{
   return (
     <div
       className={
-        "gap-2 bg-gray-400/30 backdrop-blur-sm py-2 px-4 flex flex-row items-center justify-between w-60 p-4 rounded-xl transition-all " +
+        "gap-2 bg-gray-400/30 backdrop-blur-sm py-2 px-4 flex flex-row items-center justify-between w-72 p-4 rounded-xl transition-all " +
         (selected == true ? "bg-green-600/60" : "")
       }
     >
@@ -238,7 +238,7 @@ const GroupBlock: FC<{}> = ({}) => {
             .map((game) => <GameBlock key={game.id} game={game} />)}
         <Link
           to={
-            (id as string).toUpperCase() === "H"
+            (id as string).toUpperCase() === "D"
               ? "/"
               : `/predict/group/${nextGroupId()}`
           }
@@ -249,7 +249,7 @@ const GroupBlock: FC<{}> = ({}) => {
           }}
         >
           <div className="hover:cursor-pointer text-center bg-gradient-to-r from-primary to-secondary text-white transition-all w-32 hover:w-36 hover:text-gray-400 p-2 rounded-xl font-bold">
-            {(id as string).toUpperCase() === "H" ? "Save" : "Next Group"}
+            {(id as string).toUpperCase() === "D" ? "Save" : "Next Group"}
           </div>
         </Link>
       </motion.div>

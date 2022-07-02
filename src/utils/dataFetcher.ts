@@ -25,7 +25,7 @@ const FETCHER = (url: RequestInfo) => fetch(url).then((r) => r.json());
 // };
 
 const fetchGroups = async (): Promise<Group[]> => {
-  const groupNames = ["A", "B", "C", "D", "E", "F", "G", "H"];
+  const groupNames = ["A", "B", "C", "D"];
   let groups: Group[] = [];
 
   await Promise.all(
