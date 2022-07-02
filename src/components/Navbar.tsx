@@ -40,7 +40,7 @@ const Navbar: FC<{}> = ({}) => {
 
   if (width <= 1024) {
     return (
-      <div className="items-center flex flex-row min-w-full bg-gradient-to-r from-primary to-secondary h-16 z-10 px-3">
+      <div className="items-center flex flex-row min-w-full bg-gradient-to-r from-primary to-[#001E6C] h-16 z-10 px-3">
         <Link to={`/profile/update`}>
           <img
             className="object-cover h-12 w-12 rounded-full p-1 ring-2 ring-secondary transition-all hover:cursor-pointer hover:ring-4"
@@ -92,7 +92,7 @@ const Navbar: FC<{}> = ({}) => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen w-24 bg-gradient-to-l from-primary to-secondary items-center">
+    <div className="flex flex-col min-h-screen w-24 bg-gradient-to-l from-primary to-[#001E6C] items-center">
       <Link to={`/profile/update`}>
         <img
           className="object-cover h-16 w-16 mt-6 rounded-full p-1 ring-2 ring-secondary transition-all hover:cursor-pointer hover:ring-4"
