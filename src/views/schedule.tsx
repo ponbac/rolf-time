@@ -16,7 +16,7 @@ const TeamBlock: FC<{
   return (
     <button
       className={
-        "gap-2 bg-gray-400/30 backdrop-blur-sm py-2 px-4 flex flex-row items-center justify-between w-60 p-4 rounded-xl transition-all"
+        "gap-2 bg-gray-400/30 backdrop-blur-sm py-2 px-4 flex flex-row items-center justify-between w-64 p-4 rounded-xl transition-all"
       }
       onClick={handleClick}
     >
