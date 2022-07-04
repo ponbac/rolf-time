@@ -14,6 +14,7 @@ import {
 } from "../features/auth/authSlice";
 import { useAppDispatch } from "../utils/store";
 import { setPredictions } from "../features/predict/predictSlice";
+import LoginView from "../views/login";
 
 const Head: FC<{ user?: PlayerUser }> = ({ user }) => {
   return (
@@ -89,6 +90,14 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
       }
     }
   }, [authState]);
+
+  if (window.location.pathname === "/login" && !authState.isAuthenticated) {
+    return (
+      <>
+        <LoginView />
+      </>
+    );
+  }
 
   if (!authState.isAuthenticated) {
     return (

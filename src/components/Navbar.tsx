@@ -45,7 +45,7 @@ const Navbar: FC<{}> = ({}) => {
           <img
             className="object-cover h-12 w-12 rounded-full p-1 ring-2 ring-secondary transition-all hover:cursor-pointer hover:ring-4"
             src={
-              user
+              user && user?.avatar
                 ? user.avatar
                 : "https://avatars.dicebear.com/api/big-ears-neutral/Bakuman.svg"
             }
@@ -97,8 +97,8 @@ const Navbar: FC<{}> = ({}) => {
         <img
           className="object-cover h-16 w-16 mt-6 rounded-full p-1 ring-2 ring-secondary transition-all hover:cursor-pointer hover:ring-4"
           src={
-            user
-              ? user.avatar
+            user && user?.avatar
+              ? user?.avatar
               : "https://avatars.dicebear.com/api/big-ears-neutral/Bakuman.svg"
           }
           alt={`Avatar`}

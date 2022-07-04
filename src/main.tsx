@@ -13,6 +13,7 @@ import Schedule from "./views/schedule";
 import UpdateProfile from "./views/profile/update";
 import UserProfile from "./views/profile/[user]";
 import UserPredictions from "./views/profile/predictions";
+import LoginView from "./views/login";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -21,9 +22,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Home />} />
             <Route path="profile/update" element={<UpdateProfile />} />
             <Route path="profile/:id" element={<UserProfile />} />
-            <Route path="profile/:id/predictions" element={<UserPredictions />} />
+            <Route
+              path="profile/:id/predictions"
+              element={<UserPredictions />}
+            />
             <Route path="predict" element={<Predict />} />
             <Route path="predict/group/:id" element={<GroupBlock />} />
             <Route path="schedule" element={<Schedule />} />
