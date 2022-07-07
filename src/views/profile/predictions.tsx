@@ -14,10 +14,7 @@ const PredictedGroup = (props: PredictedGroupProps) => {
 
   const TeamItem = (props: { team: Team; placing: number; key: string }) => {
     return (
-      <div
-        className="gap-2 w-64 hover:bg-primary/30 transition-all mx-2 flex flex-row items-center font-mono bg-gray-400/30 backdrop-blur-sm py-2 px-4 rounded-lg"
-        key={props.key}
-      >
+      <div className="gap-2 w-64 hover:bg-primary/30 transition-all mx-2 flex flex-row items-center font-mono bg-gray-400/30 backdrop-blur-sm py-2 px-4 rounded-lg">
         <p className={"font-bold"}>{props.placing}.</p>
         <TeamFlag team={props.team} width="2.0rem" />
         <h1>{props.team.name}</h1>
@@ -90,7 +87,10 @@ const PredictedGames = (props: PredictedGamesProps) => {
     <div className="flex flex-col items-center">
       <div className="py-2 space-y-8">
         {predictions.map((p) => (
-          <div className="flex flex-col gap-2 justify-center items-center">
+          <div
+            className="flex flex-col gap-2 justify-center items-center"
+            key={p.groupId}
+          >
             <p className="text-xl font-bold font-mono">Group {p.groupId}</p>
             {p.games.map((gamePrediction) => (
               <PredictionItem
@@ -172,7 +172,11 @@ const UserPredictions = () => {
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 my-6">
               {predictions.map((p) => (
-                <PredictedGroup groupName={p.groupId} teams={p.result} />
+                <PredictedGroup
+                  groupName={p.groupId}
+                  teams={p.result}
+                  key={p.groupId}
+                />
               ))}
             </div>
             <div className="flex flex-col justify-center items-center">
