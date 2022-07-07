@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ReorderableGroup from "../../components/ReorderableGroup";
 import { savePredictions } from "../../features/predict/predictSlice";
+import { PREDICTIONS_OPEN_UNTIL } from "../../utils/constants";
 import { fetchGroups } from "../../utils/dataFetcher";
 import { useAppDispatch } from "../../utils/store";
 
@@ -19,7 +20,7 @@ const Predict: React.FC<{}> = () => {
 
   useEffect(() => {
     const currentTime = moment();
-    if (currentTime.isAfter("2022-07-07T14:00:00")) {
+    if (currentTime.isAfter(PREDICTIONS_OPEN_UNTIL)) {
       setPredictionsClosed(true);
     }
 

@@ -10,6 +10,7 @@ import {
   savePredictions,
   selectPredictions,
 } from "../../features/predict/predictSlice";
+import { PREDICTIONS_OPEN_UNTIL } from "../../utils/constants";
 
 export const TeamBlock: FC<{
   team: Team;
@@ -189,6 +190,16 @@ const GroupBlock: FC<{}> = ({}) => {
     return groupOrder[index + 1];
   };
 
+  // TODO: This should be server-side hehe (and implemented completely differently)
+  const [predictionsClosed, setPredictionsClosed] = useState<boolean>(false);
+
+  useEffect(() => {
+    const currentTime = moment();
+    if (currentTime.isAfter(PREDICTIONS_OPEN_UNTIL)) {
+      setPredictionsClosed(true);
+    }
+  }, []);
+
   useEffect(() => {
     if (id != undefined) {
       setIsLoading(true);
@@ -198,6 +209,19 @@ const GroupBlock: FC<{}> = ({}) => {
       });
     }
   }, [id]);
+
+  if (predictionsClosed) {
+    return (
+      <div className="flex flex-col justify-center items-center min-h-screen text-center px-3">
+        <h1 className="text-4xl font-bold font-mono">
+          Predictions are currently closed!
+        </h1>
+        <h2 className="text-sm font-mono">
+          Bracket stage predictions will open after the group stage is finished.
+        </h2>
+      </div>
+    );
+  }
 
   if (!id) {
     return (
@@ -244,7 +268,7 @@ const GroupBlock: FC<{}> = ({}) => {
           }
           onClick={() => {
             //if ((id as string).toUpperCase() === "H") {
-              dispatch(savePredictions());
+            dispatch(savePredictions());
             //}
           }}
         >
