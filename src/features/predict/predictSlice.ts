@@ -1,10 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { User } from "@supabase/supabase-js";
-import {
-  fetchUser,
-  updateUserData,
-  updateUserPredictions,
-} from "../../utils/dataFetcher";
+import { updateUserPredictions } from "../../utils/dataFetcher";
 import store, { AppState, AppThunk } from "../../utils/store";
 
 const initialPredictState: {
@@ -110,5 +105,4 @@ export default predictSlice.reducer;
 export const { predictGroup, predictGame, setSaved, setPredictions } =
   predictSlice.actions;
 
-export const selectPredictions = (state: AppState) =>
-  state.predict.predictions;
+export const selectPredictions = (state: AppState) => state.predict.predictions;

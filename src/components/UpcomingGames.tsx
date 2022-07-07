@@ -1,6 +1,8 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { selectPredictions } from "../features/predict/predictSlice";
 import { fetchGames } from "../utils/dataFetcher";
+import { useAppSelector } from "../utils/store";
 import LoadingIndicator from "./LoadingIndicator";
 import TeamFlag from "./TeamFlag";
 
@@ -11,6 +13,21 @@ const UpcomingGame = (props: UpcomingGameProps) => {
   const { offset = 0 } = props;
   const [game, setGame] = useState<Game | undefined>(undefined);
   const [date, setDate] = useState<string | undefined>(undefined);
+  const [prediction, setPrediction] = useState<GamePrediction | undefined>(
+    undefined
+  );
+
+  const userPredictions = useAppSelector(selectPredictions);
+
+  const findPrediction = (g: Game) => {
+    const group = userPredictions.find((p) => p.groupId === g.groupId);
+    if (group) {
+      const prediction = group.games.find((p) => p.id === g.id);
+      if (prediction) {
+        return prediction;
+      }
+    }
+  };
 
   useEffect(() => {
     fetchGames().then((games) => {
@@ -28,6 +45,7 @@ const UpcomingGame = (props: UpcomingGameProps) => {
 
       setGame(nextGame);
       setDate(moment(nextGame.date).format("dddd DD/MM, HH:mm"));
+      setPrediction(findPrediction(nextGame));
     });
   }, [game]);
 
@@ -38,11 +56,26 @@ const UpcomingGame = (props: UpcomingGameProps) => {
   return (
     <div className="flex flex-col items-center justify-center font-novaMono space-y-2">
       <div className="flex flex-row gap-4 justify-center items-center">
-        <TeamFlag team={game.homeTeam} width={"3rem"} className="rounded-md" />
+        <TeamFlag
+          team={game.homeTeam}
+          width={"3.5rem"}
+          className="rounded-md"
+        />
         <p className="font-bold text-3xl">vs</p>
-        <TeamFlag team={game.awayTeam} width={"3rem"} className="rounded-md" />
+        <TeamFlag
+          team={game.awayTeam}
+          width={"3.5rem"}
+          className="rounded-md"
+        />
       </div>
-      <p className="text-sm">{date}</p>
+      <div className="flex flex-col items-center justify-center">
+        <p className="text-md text-center">{date}</p>
+        {prediction && (
+          <p className="text-sm italic text-center">
+            Prediction: ({prediction.homeGoals} - {prediction.awayGoals})
+          </p>
+        )}
+      </div>
     </div>
   );
 };
@@ -50,7 +83,7 @@ const UpcomingGame = (props: UpcomingGameProps) => {
 const UpcomingGames = () => {
   return (
     <div className="flex flex-col items-center justify-center bg-gray-400/40 w-72 py-3 rounded-3xl font-novaMono space-y-4">
-      <p className="font-bold text-xl">Upcoming:</p>
+      <p className="font-bold text-2xl text-center">Upcoming:</p>
       <UpcomingGame />
       <UpcomingGame offset={1} />
     </div>
