@@ -163,7 +163,7 @@ const UserPredictions = () => {
         transition={{ duration: 1.5 }}
       >
         <div className="flex flex-col items-center justify-center">
-          <p className="text-7xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+          <p className="text-center text-7xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
             {user?.name}
           </p>
           <p className="text-3xl font-bold font-mono italic">{user?.score}p</p>

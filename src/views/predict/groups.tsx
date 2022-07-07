@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ReorderableGroup from "../../components/ReorderableGroup";
@@ -11,15 +12,32 @@ const Predict: React.FC<{}> = () => {
   const [groups, setGroups] = useState<Group[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  // TODO: This should be server-side hehe (and implemented completely differently)
+  const [predictionsClosed, setPredictionsClosed] = useState<boolean>(false);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    const currentTime = moment();
+    if (currentTime.isAfter("2022-07-07T20:00:00")) {
+      setPredictionsClosed(true);
+    }
+
     setIsLoading(true);
     fetchGroups().then((g) => {
       setGroups(g);
       setIsLoading(false);
     });
   }, []);
+
+  if (predictionsClosed) {
+    return (
+      <div className="flex flex-col justify-center items-center min-h-screen text-center px-3">
+        <h1 className="text-4xl font-bold font-mono">Predictions are currently closed!</h1>
+        <h2 className="text-sm font-mono">Bracket stage predictions will open after the group stage is finished.</h2>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
