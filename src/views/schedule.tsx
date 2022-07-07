@@ -2,7 +2,9 @@ import { motion } from "framer-motion";
 import moment from "moment";
 import React, { FC, useEffect, useState } from "react";
 import TeamFlag from "../components/TeamFlag";
-import { fetchGames } from "../utils/dataFetcher";
+import { selectIsAdmin, selectUser } from "../features/auth/authSlice";
+import { fetchGames, updateGame } from "../utils/dataFetcher";
+import { useAppSelector } from "../utils/store";
 
 type TeamBlockProps = {
   team: Team;
@@ -26,10 +28,102 @@ const TeamBlock = (props: TeamBlockProps) => {
   );
 };
 
+type AdminControlsProps = {
+  game: Game;
+};
+const AdminControls = (props: AdminControlsProps) => {
+  const { game } = props;
+  let date = moment(game.date).format("dddd DD/MM, HH:mm");
+  const [homeGoals, setHomeGoals] = useState<number>(game.homeGoals);
+  const [awayGoals, setAwayGoals] = useState<number>(game.awayGoals);
+
+  type GoalButtonProps = {
+    awayTeam?: boolean;
+  };
+  const AddButton = (props: GoalButtonProps) => {
+    return (
+      <button
+        className="bg-green-600/60 hover:bg-green-500 text-white font-bold px-2 rounded-full transition-all"
+        onClick={() => {
+          if (props.awayTeam) {
+            setAwayGoals(awayGoals + 1);
+          } else {
+            setHomeGoals(homeGoals + 1);
+          }
+        }}
+      >
+        +
+      </button>
+    );
+  };
+  const MinusButton = (props: GoalButtonProps) => {
+    return (
+      <button
+        className="bg-red-600/60 hover:bg-red-500 text-white font-bold px-2 rounded-full transition-all"
+        onClick={() => {
+          if (props.awayTeam) {
+            if (awayGoals > 0) {
+              setAwayGoals(awayGoals - 1);
+            }
+          } else {
+            if (homeGoals > 0) {
+              setHomeGoals(homeGoals - 1);
+            }
+          }
+        }}
+      >
+        -
+      </button>
+    );
+  };
+
+  const saveGame = async () => {
+    let winner: number =
+      homeGoals > awayGoals ? game.homeTeam.id : game.awayTeam.id;
+    if (homeGoals === awayGoals) {
+      winner = -1;
+    }
+
+    await updateGame(game.id, winner, homeGoals, awayGoals);
+  };
+
+  return (
+    <div className="flex flex-col text-center items-center my-2">
+      <p className="text-xs italic">{date}</p>
+      <div className="flex flex-row items-center justify-center">
+        <div className="mr-4 space-x-2">
+          <MinusButton />
+          <AddButton />
+        </div>
+
+        <p className="text-2xl">
+          {homeGoals} - {awayGoals}
+        </p>
+        <div className="ml-4 space-x-2">
+          <AddButton awayTeam={true} />
+          <MinusButton awayTeam={true} />
+        </div>
+      </div>
+      <button
+        className="bg-gray-500 rounded-full w-20 font-mono text-sm hover:bg-slate-700 transition-all"
+        onClick={() => saveGame()}
+      >
+        {game.finished ? "Update" : "Save"}
+      </button>
+    </div>
+  );
+};
+
 const GameBlock: FC<{ game: Game }> = ({ game }) => {
+  const isAdmin = useAppSelector(selectIsAdmin);
+
   let date = moment(game.date).format("dddd DD/MM, HH:mm");
 
   const MiddleSection = () => {
+    if (isAdmin) {
+      return <AdminControls game={game} />;
+    }
+
     if (game.finished) {
       return (
         <div className="flex flex-col text-center w-44">

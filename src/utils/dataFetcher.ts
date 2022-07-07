@@ -200,6 +200,28 @@ const updateUserPredictions = async (
   return data;
 };
 
+const updateGame = async (
+  gameId: number,
+  winner: number,
+  homeGoals: number,
+  awayGoals: number
+): Promise<any> => {
+  const { data, error } = await SUPABASE.from("games")
+    .update({
+      finished: true,
+      winner: winner == -1 ? null : winner,
+      homeGoals: homeGoals,
+      awayGoals: awayGoals,
+    })
+    .match({ id: gameId });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+
 const fetchPredictions = async (userId: string): Promise<GroupPrediction[]> => {
   const { data, error } = await SUPABASE.from("users")
     .select(
@@ -229,5 +251,6 @@ export {
   fetchPredictions,
   updateUserData,
   updateUserPredictions,
+  updateGame,
   isLoggedIn,
 };

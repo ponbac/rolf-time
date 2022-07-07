@@ -4,3 +4,4 @@ export const APP_URL = (): string =>
     : "https://england.backman.app";
 
 export const PREDICTIONS_OPEN_UNTIL = "2022-07-07T14:00:00";
+export const ADMIN_ID = "b0833ff0-5938-4355-b940-8c92ec1088cb";

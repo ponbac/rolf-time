@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "@supabase/supabase-js";
+import { ADMIN_ID } from "../../utils/constants";
 import { fetchUser, updateUserData } from "../../utils/dataFetcher";
 import { AppState, AppThunk } from "../../utils/store";
 
@@ -60,3 +61,5 @@ export const { signedIn, signedOut } = authSlice.actions;
 
 export const selectAuthState = (state: AppState) => state.auth;
 export const selectUser = (state: AppState) => selectAuthState(state).user;
+export const selectIsAdmin = (state: AppState) =>
+  selectAuthState(state).user?.id == ADMIN_ID;
