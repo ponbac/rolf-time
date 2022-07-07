@@ -60,6 +60,20 @@ const PredictedGames = (props: PredictedGamesProps) => {
       return null;
     }
 
+    const correctPrediction = prediction.winner == game.winner;
+    const correctScore =
+      prediction.homeGoals == game.homeGoals &&
+      prediction.awayGoals == game.awayGoals;
+    const resultTextColor = () => {
+      if (correctScore) {
+        return "text-blue-400";
+      } else if (correctPrediction) {
+        return "text-green-400";
+      } else {
+        return "text-red-500";
+      }
+    };
+
     return (
       <div className="font-mono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-10 lg:mb-0">
         <TeamBlock
@@ -68,10 +82,16 @@ const PredictedGames = (props: PredictedGamesProps) => {
           selected={game.homeTeam.id == prediction.winner}
         />
         <div className="flex flex-col text-center">
-          <div className="flex flex-row items-center justify-center">
+          <div className="flex flex-col items-center justify-center">
             <p className="text-2xl">
               {prediction.homeGoals} - {prediction.awayGoals}
             </p>
+            {game.finished && (
+              <p className={"text-xs " + resultTextColor()}>
+                ({game.homeGoals} - {game.awayGoals}){" "}
+                {correctScore ? "+4" : correctPrediction ? "+3" : ""}
+              </p>
+            )}
           </div>
         </div>
         <TeamBlock
