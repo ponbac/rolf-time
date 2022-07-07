@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import LoadingIndicator from "../../components/LoadingIndicator";
 import ReorderableGroup from "../../components/ReorderableGroup";
 import { savePredictions } from "../../features/predict/predictSlice";
 import { PREDICTIONS_OPEN_UNTIL } from "../../utils/constants";
@@ -34,23 +35,18 @@ const Predict: React.FC<{}> = () => {
   if (predictionsClosed) {
     return (
       <div className="flex flex-col justify-center items-center min-h-screen text-center px-3">
-        <h1 className="text-4xl font-bold font-mono">Predictions are currently closed!</h1>
-        <h2 className="text-sm font-mono">Bracket stage predictions will open after the group stage is finished.</h2>
+        <h1 className="text-4xl font-bold font-mono">
+          Predictions are currently closed!
+        </h1>
+        <h2 className="text-sm font-mono">
+          Bracket stage predictions will open after the group stage is finished.
+        </h2>
       </div>
     );
   }
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <div className="loading-indicator">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    );
+    return <LoadingIndicator fullscreen={true} />;
   }
 
   return (

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { FC } from "react";
 import Header from "../components/Header";
 import Leaderboard from "../components/Leaderboard";
+import UpcomingGames from "../components/UpcomingGames";
 
 const Home: FC<{}> = () => {
   return (
@@ -12,7 +13,8 @@ const Home: FC<{}> = () => {
       transition={{ duration: 0.5 }}
     >
       <Header text="[ENGLAND 2022]" />
-      <div className="flex flex-col flex-0 justify-center items-center pt-20">
+      <div className="flex flex-col flex-0 justify-center items-center pt-16 space-y-16">
+        <UpcomingGames />
         <Leaderboard />
       </div>
     </motion.div>

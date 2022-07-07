@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from "react";
 import { fetchGames, fetchUser } from "../../utils/dataFetcher";
 import TeamFlag from "../../components/TeamFlag";
 import { TeamBlock } from "../predict/[groupId]";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 type PredictedGroupProps = {
   groupName: string;
@@ -154,16 +155,7 @@ const UserPredictions = () => {
   }
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <div className="loading-indicator">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    );
+    return <LoadingIndicator fullscreen={true} />;
   }
 
   if (!isLoading && predictions == undefined) {

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchAllUsers } from "../utils/dataFetcher";
+import LoadingIndicator from "./LoadingIndicator";
 
 const PlayerItem: FC<{
   rank: number;
@@ -73,14 +74,7 @@ const Leaderboard: FC<{}> = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex justify-center items-center">
-        <div className="loading-indicator">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
+      <LoadingIndicator />
     );
   }
 

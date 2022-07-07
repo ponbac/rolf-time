@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import moment from "moment";
 import React, { FC, useEffect, useState } from "react";
+import LoadingIndicator from "../components/LoadingIndicator";
 import TeamFlag from "../components/TeamFlag";
 import { selectIsAdmin, selectUser } from "../features/auth/authSlice";
 import { fetchGames, updateGame } from "../utils/dataFetcher";
@@ -172,16 +173,7 @@ const Schedule: FC<{}> = ({}) => {
   }, []);
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <div className="loading-indicator">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    );
+    return <LoadingIndicator fullscreen={true} />;
   }
 
   return (

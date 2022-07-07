@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link, useParams } from "react-router-dom";
 import { FC, useEffect, useState } from "react";
 import { fetchUser } from "../../utils/dataFetcher";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 const UserProfile: FC<{}> = ({}) => {
   let params = useParams();
@@ -27,14 +28,7 @@ const UserProfile: FC<{}> = ({}) => {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex justify-center items-center">
-        <div className="loading-indicator">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
+      <LoadingIndicator fullscreen={true} />
     );
   }
 

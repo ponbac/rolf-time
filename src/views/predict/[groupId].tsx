@@ -11,6 +11,7 @@ import {
   selectPredictions,
 } from "../../features/predict/predictSlice";
 import { PREDICTIONS_OPEN_UNTIL } from "../../utils/constants";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 export const TeamBlock: FC<{
   team: Team;
@@ -232,16 +233,7 @@ const GroupBlock: FC<{}> = ({}) => {
   }
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <div className="loading-indicator">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    );
+    return <LoadingIndicator fullscreen={true} />;
   }
 
   return (
