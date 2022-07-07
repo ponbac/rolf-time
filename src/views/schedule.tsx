@@ -98,7 +98,7 @@ const Schedule: FC<{}> = ({}) => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary mb-2">
+        <h1 className="text-6xl font-bold font-novaMono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary mb-2">
           Schedule
         </h1>
         {games &&

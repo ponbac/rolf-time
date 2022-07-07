@@ -19,7 +19,7 @@ const Predict: React.FC<{}> = () => {
 
   useEffect(() => {
     const currentTime = moment();
-    if (currentTime.isAfter("2022-07-07T20:00:00")) {
+    if (currentTime.isAfter("2022-07-07T14:00:00")) {
       setPredictionsClosed(true);
     }
 
