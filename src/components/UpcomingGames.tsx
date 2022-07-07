@@ -38,9 +38,9 @@ const UpcomingGame = (props: UpcomingGameProps) => {
   return (
     <div className="flex flex-col items-center justify-center font-novaMono space-y-2">
       <div className="flex flex-row gap-4 justify-center items-center">
-        <TeamFlag team={game.homeTeam} width={"3rem"} />
+        <TeamFlag team={game.homeTeam} width={"3rem"} className="rounded-md" />
         <p className="font-bold text-3xl">vs</p>
-        <TeamFlag team={game.awayTeam} width={"3rem"} />
+        <TeamFlag team={game.awayTeam} width={"3rem"} className="rounded-md" />
       </div>
       <p className="text-sm">{date}</p>
     </div>
