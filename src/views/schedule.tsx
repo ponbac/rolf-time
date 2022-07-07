@@ -4,39 +4,62 @@ import React, { FC, useEffect, useState } from "react";
 import TeamFlag from "../components/TeamFlag";
 import { fetchGames } from "../utils/dataFetcher";
 
-const TeamBlock: FC<{
+type TeamBlockProps = {
   team: Team;
-}> = ({ team }) => {
+  winner?: boolean;
+};
+const TeamBlock = (props: TeamBlockProps) => {
+  const { team, winner = false } = props;
   const flagWidth = "2.25rem";
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-  };
-
+  const bgColor = winner ? "bg-green-600/60" : "bg-gray-400/30";
   return (
-    <button
+    <div
       className={
-        "gap-2 bg-gray-400/30 backdrop-blur-sm py-2 px-4 flex flex-row items-center justify-between w-64 p-4 rounded-xl transition-all"
+        "gap-2 backdrop-blur-sm py-2 px-4 flex flex-row items-center justify-between w-64 p-4 rounded-xl transition-all " +
+        bgColor
       }
-      onClick={handleClick}
     >
       <p className="text-lg font-normal">{team.name}</p>
       <TeamFlag team={team} width={flagWidth} />
-    </button>
+    </div>
   );
 };
 
 const GameBlock: FC<{ game: Game }> = ({ game }) => {
   let date = moment(game.date).format("dddd DD/MM, HH:mm");
 
-  return (
-    <div className="font-mono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-10 lg:mb-0">
-      <TeamBlock team={game.homeTeam} />
+  const MiddleSection = () => {
+    if (game.finished) {
+      return (
+        <div className="flex flex-col text-center w-44">
+          <p className="text-2xl">
+            {game.homeGoals} - {game.awayGoals}
+          </p>
+          <p className="text-xs italic">{date}</p>
+        </div>
+      );
+    }
+
+    return (
       <div className="flex flex-col text-center w-44">
         <p className="text-2xl">vs</p>
         <p className="text-xs italic">{date}</p>
       </div>
-      <TeamBlock team={game.awayTeam} />
+    );
+  };
+
+  return (
+    <div className="font-mono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-10 lg:mb-0">
+      <TeamBlock
+        team={game.homeTeam}
+        winner={game.winner == game.homeTeam.id}
+      />
+      <MiddleSection />
+      <TeamBlock
+        team={game.awayTeam}
+        winner={game.winner == game.awayTeam.id}
+      />
     </div>
   );
 };
@@ -78,7 +101,10 @@ const Schedule: FC<{}> = ({}) => {
         <h1 className="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary mb-2">
           Schedule
         </h1>
-        {games && games?.sort((a, b) => a.date.localeCompare(b.date)).map((game) => <GameBlock key={game.id} game={game} />)}
+        {games &&
+          games
+            ?.sort((a, b) => a.date.localeCompare(b.date))
+            .map((game) => <GameBlock key={game.id} game={game} />)}
       </motion.div>
     </div>
   );

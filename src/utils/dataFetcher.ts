@@ -117,7 +117,8 @@ const fetchGames = async (): Promise<Game[]> => {
     homeTeam: homeTeam ( id, name, flagCode, groupId ),
     awayTeam: awayTeam ( id, name, flagCode, groupId ),
     date,
-    groupId
+    groupId,
+    winner
     `
   );
   if (error) {
