@@ -137,7 +137,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
             }}
           >
             <h1 className="px-2 text-center animate-bounce h-full lg:h-48 font-novaMono font-extrabold text-transparent text-8xl bg-clip-text bg-gradient-to-r from-primary to-secondary">
-              It&apos;s betting time!
+              Let&apos;s go Sweden!
             </h1>
           </motion.div>
         )}
