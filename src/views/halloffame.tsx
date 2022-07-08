@@ -12,7 +12,7 @@ const HoFItem: FC<{}> = () => {
       </div>
       <img
         className="rounded-full p-1 ring-2 hover:ring-4 transition-all ring-primary w-20 h-20 object-cover"
-        src={"/kjelle.png"}
+        src={"/images/kjelle.png"}
         alt={`kjelle avatar`}
         width={70}
         height={70}
