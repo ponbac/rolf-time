@@ -7,10 +7,11 @@ import LoadingIndicator from "./LoadingIndicator";
 import TeamFlag from "./TeamFlag";
 
 type UpcomingGameProps = {
+  games: Game[];
   offset?: number;
 };
 const UpcomingGame = (props: UpcomingGameProps) => {
-  const { offset = 0 } = props;
+  const { games, offset = 0 } = props;
   const [game, setGame] = useState<Game | undefined>(undefined);
   const [date, setDate] = useState<string | undefined>(undefined);
   const [prediction, setPrediction] = useState<GamePrediction | undefined>(
@@ -30,23 +31,21 @@ const UpcomingGame = (props: UpcomingGameProps) => {
   };
 
   useEffect(() => {
-    fetchGames().then((games) => {
-      const sortedGames = games.sort((a, b) => a.date.localeCompare(b.date));
+    const sortedGames = games.sort((a, b) => a.date.localeCompare(b.date));
 
-      let nextGameIndex = 0;
-      for (const g of sortedGames) {
-        if (moment(g.date).isAfter(moment())) {
-          break;
-        }
-        nextGameIndex++;
+    let nextGameIndex = 0;
+    for (const g of sortedGames) {
+      if (moment(g.date).isAfter(moment())) {
+        break;
       }
+      nextGameIndex++;
+    }
 
-      const nextGame = sortedGames[nextGameIndex + offset];
+    const nextGame = sortedGames[nextGameIndex + offset];
 
-      setGame(nextGame);
-      setDate(moment(nextGame.date).format("dddd DD/MM, HH:mm"));
-      setPrediction(findPrediction(nextGame));
-    });
+    setGame(nextGame);
+    setDate(moment(nextGame.date).format("dddd DD/MM, HH:mm"));
+    setPrediction(findPrediction(nextGame));
   }, [game]);
 
   if (!game) {
@@ -81,11 +80,29 @@ const UpcomingGame = (props: UpcomingGameProps) => {
 };
 
 const UpcomingGames = () => {
+  const [games, setGames] = useState<Game[] | undefined>(undefined);
+
+  useEffect(() => {
+    fetchGames().then((games) => {
+      if (games) {
+        setGames(games);
+      }
+    });
+  }, []);
+
+  if (!games) {
+    return (
+      <div className="flex flex-col items-center justify-center bg-gray-400/40 w-72 py-3 rounded-3xl font-novaMono space-y-4">
+        <LoadingIndicator />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col items-center justify-center bg-gray-400/40 w-72 py-3 rounded-3xl font-novaMono space-y-4">
       <p className="font-bold text-2xl text-center">Upcoming:</p>
-      <UpcomingGame />
-      <UpcomingGame offset={1} />
+      <UpcomingGame games={games} />
+      <UpcomingGame games={games} offset={1} />
     </div>
   );
 };

@@ -126,6 +126,9 @@ const PredictedGames = (props: PredictedGamesProps) => {
   );
 };
 
+/*
+TODO: Make sections collapsable
+*/
 const UserPredictions = () => {
   let params = useParams();
   const id = params.id;
