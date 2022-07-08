@@ -165,6 +165,7 @@ const Schedule: FC<{}> = ({}) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setIsLoading(true);
     fetchGames().then((g) => {
       setGames(g);

@@ -138,6 +138,7 @@ const UserPredictions = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (id != undefined) {
       fetchUser(id as string).then((u) => {
         setUser(u);
