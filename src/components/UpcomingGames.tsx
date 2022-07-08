@@ -35,7 +35,7 @@ const UpcomingGame = (props: UpcomingGameProps) => {
 
     let nextGameIndex = 0;
     for (const g of sortedGames) {
-      if (moment(g.date).isAfter(moment().add(15, "minutes"))) {
+      if (moment(g.date).isAfter(moment().add(90, "minutes"))) {
         break;
       }
       nextGameIndex++;
