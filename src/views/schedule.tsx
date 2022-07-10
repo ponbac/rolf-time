@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import moment from "moment";
 import React, { FC, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import LoadingIndicator from "../components/LoadingIndicator";
 import TeamFlag from "../components/TeamFlag";
 import { selectIsAdmin, selectUser } from "../features/auth/authSlice";
@@ -144,18 +145,40 @@ const GameBlock: FC<{ game: Game }> = ({ game }) => {
     );
   };
 
+  const MainContent = () => {
+    return (
+      <div className="font-mono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-10 lg:mb-0">
+        <TeamBlock
+          team={game.homeTeam}
+          winner={game.winner == game.homeTeam.id}
+        />
+        <MiddleSection />
+        <TeamBlock
+          team={game.awayTeam}
+          winner={game.winner == game.awayTeam.id}
+        />
+      </div>
+    );
+  };
+
+  if (isAdmin) {
+    return <MainContent />;
+  }
+
   return (
-    <div className="font-mono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-10 lg:mb-0">
-      <TeamBlock
-        team={game.homeTeam}
-        winner={game.winner == game.homeTeam.id}
-      />
-      <MiddleSection />
-      <TeamBlock
-        team={game.awayTeam}
-        winner={game.winner == game.awayTeam.id}
-      />
-    </div>
+    <Link to={`/game/${game.id}`}>
+      <div className="font-mono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-10 lg:mb-0 hover:cursor-pointer hover:bg-gray-600/30 rounded-xl transition-all">
+        <TeamBlock
+          team={game.homeTeam}
+          winner={game.winner == game.homeTeam.id}
+        />
+        <MiddleSection />
+        <TeamBlock
+          team={game.awayTeam}
+          winner={game.winner == game.awayTeam.id}
+        />
+      </div>
+    </Link>
   );
 };
 
