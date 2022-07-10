@@ -70,7 +70,7 @@ const PredictionsList = (props: PredictionsListProps) => {
       <Link to={`/profile/${user.id}`}>
         <div
           className={
-            "flex flex-row w-96 items-center bg-gray-400/40 rounded-xl gap-6 p-2 hover:bg-primary/40 transition-all"
+            "flex flex-row w-[22rem] lg:w-96 items-center bg-gray-400/40 rounded-xl gap-6 p-2 hover:bg-primary/40 transition-all"
           }
         >
           <img
@@ -83,9 +83,9 @@ const PredictionsList = (props: PredictionsListProps) => {
             width={70}
             height={70}
           />
-          <p className="font-bold text-lg">{user.name}</p>
+          <p className="font-bold text-lg flex-1">{user.name}, {user.score}p</p>
           {prediction && (
-            <p className="font-bold">
+            <p className="font-bold text-xl">
               ({prediction.homeGoals} - {prediction.awayGoals})
             </p>
           )}
