@@ -37,8 +37,10 @@ const PlayerItem: FC<{
           width={70}
           height={70}
         />
-        <div className="flex-1 lg:w-72">
-          <h1 className="text-xl font-bold">{player.name ?? "Unknown"}</h1>
+        <div className="flex-1 lg:w-72 overflow-hidden">
+          <h1 className="text-xl font-bold text-ellipsis overflow-hidden">
+            {player.name ?? "Unknown"}
+          </h1>
           <p className="text-sm text-gray-400 text-ellipsis overflow-hidden h-5">
             {player.description ?? "Who might this be!?"}
           </p>
@@ -73,9 +75,7 @@ const Leaderboard: FC<{}> = () => {
   }, []);
 
   if (isLoading) {
-    return (
-      <LoadingIndicator />
-    );
+    return <LoadingIndicator />;
   }
 
   return (

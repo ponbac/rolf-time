@@ -38,7 +38,7 @@ const Head: FC<{ user?: PlayerUser }> = ({ user }) => {
 
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   const [introVisible, setIntroVisible] = useState(true);
-  const introDuration: number = 3.0;
+  const introDuration: number = 2.0;
 
   const user = useSelector(selectUser);
   const authState = useSelector(selectAuthState);
@@ -136,7 +136,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
               setIntroVisible(false);
             }}
           >
-            <h1 className="px-2 text-center animate-bounce h-full lg:h-48 font-novaMono font-extrabold text-transparent text-8xl bg-clip-text bg-gradient-to-r from-primary to-secondary">
+            <h1 className="px-4 text-center animate-bounce h-full lg:h-48 font-novaMono font-extrabold text-transparent text-7xl lg:text-8xl bg-clip-text bg-gradient-to-r from-primary to-secondary">
               Let&apos;s go Sweden!
             </h1>
           </motion.div>
