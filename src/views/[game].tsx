@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -83,7 +84,9 @@ const PredictionsList = (props: PredictionsListProps) => {
             width={70}
             height={70}
           />
-          <p className="font-bold text-lg flex-1">{user.name}, {user.score}p</p>
+          <p className="font-bold text-lg flex-1">
+            {user.name}, {user.score}p
+          </p>
           {prediction && (
             <p className="font-bold text-xl">
               ({prediction.homeGoals} - {prediction.awayGoals})
@@ -137,10 +140,17 @@ const GameView = (props: GameViewProps) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen font-novaMono">
-      <GameBox game={game} />
-      <PredictionsList game={game} className="mt-8" />
-    </div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.50 }}
+    >
+      <div className="flex flex-col items-center justify-center min-h-screen font-novaMono">
+        <GameBox game={game} />
+        <PredictionsList game={game} className="mt-8" />
+      </div>
+    </motion.div>
   );
 };
 
