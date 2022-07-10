@@ -1,5 +1,6 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { selectPredictions } from "../features/predict/predictSlice";
 import { fetchGames } from "../utils/dataFetcher";
 import { useAppSelector } from "../utils/store";
@@ -53,29 +54,31 @@ const UpcomingGame = (props: UpcomingGameProps) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center font-novaMono space-y-2">
-      <div className="flex flex-row gap-4 justify-center items-center">
-        <TeamFlag
-          team={game.homeTeam}
-          width={"3.5rem"}
-          className="rounded-md"
-        />
-        <p className="font-bold text-3xl">vs</p>
-        <TeamFlag
-          team={game.awayTeam}
-          width={"3.5rem"}
-          className="rounded-md"
-        />
+    <Link to={`/game/${game.id}`}>
+      <div className="flex flex-col items-center justify-center font-novaMono space-y-2">
+        <div className="flex flex-row gap-4 justify-center items-center">
+          <TeamFlag
+            team={game.homeTeam}
+            width={"3.5rem"}
+            className="rounded-md"
+          />
+          <p className="font-bold text-3xl">vs</p>
+          <TeamFlag
+            team={game.awayTeam}
+            width={"3.5rem"}
+            className="rounded-md"
+          />
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <p className="text-md text-center">{date}</p>
+          {prediction && (
+            <p className="text-sm italic text-center">
+              Prediction: ({prediction.homeGoals} - {prediction.awayGoals})
+            </p>
+          )}
+        </div>
       </div>
-      <div className="flex flex-col items-center justify-center">
-        <p className="text-md text-center">{date}</p>
-        {prediction && (
-          <p className="text-sm italic text-center">
-            Prediction: ({prediction.homeGoals} - {prediction.awayGoals})
-          </p>
-        )}
-      </div>
-    </div>
+    </Link>
   );
 };
 

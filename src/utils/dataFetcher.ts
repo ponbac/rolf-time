@@ -128,6 +128,29 @@ const fetchGames = async (): Promise<Game[]> => {
   return data;
 };
 
+const fetchGame = async (gameId: string): Promise<Game> => {
+  const { data, error } = await SUPABASE.from("games")
+    .select(
+      `
+    id,
+    finished,
+    homeGoals,
+    awayGoals,
+    homeTeam: homeTeam ( id, name, flagCode, groupId ),
+    awayTeam: awayTeam ( id, name, flagCode, groupId ),
+    date,
+    groupId,
+    winner
+    `
+    )
+    .match({ id: gameId });
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data[0];
+};
+
 const getCurrentUser = (): User | null => {
   const user = SUPABASE.auth.user();
 
@@ -244,6 +267,7 @@ export {
   SUPABASE,
   fetchGroup,
   fetchGroups,
+  fetchGame,
   fetchGames,
   getCurrentUser,
   fetchUser,

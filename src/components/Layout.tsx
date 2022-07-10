@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { FC, ReactNode, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Navbar from "./Navbar";
-import { fetchUser, SUPABASE, updateUserData } from "../utils/dataFetcher";
+import { fetchUser, SUPABASE } from "../utils/dataFetcher";
 import { SignInButton, SignInProvider } from "./auth/Buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   login,
   selectAuthState,

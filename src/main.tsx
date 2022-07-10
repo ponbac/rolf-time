@@ -14,6 +14,7 @@ import UpdateProfile from "./views/profile/update";
 import UserProfile from "./views/profile/[user]";
 import UserPredictions from "./views/profile/predictions";
 import LoginView from "./views/login";
+import GameView from "./views/[game]";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               path="profile/:id/predictions"
               element={<UserPredictions />}
             />
+            <Route path="/game/:id" element={<GameView />} />
             <Route path="predict" element={<Predict />} />
             <Route path="predict/group/:id" element={<GroupBlock />} />
             <Route path="schedule" element={<Schedule />} />
