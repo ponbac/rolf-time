@@ -185,7 +185,14 @@ const fetchAllUsers = async (): Promise<any> => {
     throw new Error(error.message);
   }
 
-  return data;
+  let parsedUsers = data.map((user) => {
+    if (user.predictions != null) {
+      user.predictions = JSON.parse(user.predictions);
+    }
+    return user;
+  });
+
+  return parsedUsers;
 };
 
 const updateUserData = async (
