@@ -112,7 +112,7 @@ const UpdateProfile: FC<{}> = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="flex flex-row items-center justify-center font-mono bg-gray-500/70 backdrop-blur-sm rounded-lg p-20">
+        <div className="flex flex-row items-center justify-center font-novaMono bg-gray-500/70 backdrop-blur-sm rounded-lg p-20">
           <h1>No user signed in...</h1>
         </div>
       </motion.div>
@@ -126,7 +126,7 @@ const UpdateProfile: FC<{}> = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="flex flex-col items-center justify-center font-mono bg-gray-500/70 backdrop-blur-sm rounded-xl p-10 w-80 h-80 overflow-hidden">
+      <div className="flex flex-col items-center justify-center font-novaMono bg-gray-500/70 backdrop-blur-sm rounded-xl p-10 w-80 h-80 overflow-hidden">
         {avatarElement(user)}
         <div className="my-4">
           <h1

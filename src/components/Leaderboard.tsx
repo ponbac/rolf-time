@@ -23,7 +23,7 @@ const PlayerItem: FC<{
 
   return (
     <Link to={`/profile/${player.id}`}>
-      <div className="mb-2 hover:cursor-pointer hover:bg-primary/40 transition-all mx-2 flex flex-row items-center gap-5 lg:gap-11 font-mono bg-gray-400/40 backdrop-blur-sm py-2 px-6 rounded-lg">
+      <div className="font-novaMono mb-2 hover:cursor-pointer hover:bg-primary/40 transition-all mx-2 flex flex-row items-center gap-5 lg:gap-11 bg-gray-400/40 backdrop-blur-sm py-2 px-6 rounded-lg">
         <h1 className={`text-4xl font-bold`}>
           <span className={rankColor(rank)}>{rank}</span>.
         </h1>

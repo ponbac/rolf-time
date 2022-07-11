@@ -30,12 +30,12 @@ export const TeamBlock: FC<{
       {away && (
         <>
           <TeamFlag team={team} width={flagWidth} />
-          <p className="text-xl">{team.name}</p>
+          <p className="text-xl font-bold">{team.name}</p>
         </>
       )}
       {!away && (
         <>
-          <p className="text-xl">{team.name}</p>
+          <p className="text-xl font-bold">{team.name}</p>
           <TeamFlag team={team} width={flagWidth} />
         </>
       )}
@@ -141,7 +141,7 @@ const GameBlock: FC<{ game: Game }> = ({ game }) => {
   }, []);
 
   return (
-    <div className="font-mono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-10 lg:mb-0">
+    <div className="font-novaMono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-10 lg:mb-0">
       <TeamBlock
         team={game.homeTeam}
         away={false}
@@ -154,7 +154,7 @@ const GameBlock: FC<{ game: Game }> = ({ game }) => {
             <AddButton />
           </div>
 
-          <p className="text-2xl">
+          <p className="text-2xl font-bold">
             {homeGoals} - {awayGoals}
           </p>
           <div className="ml-4 space-x-2">
@@ -214,10 +214,10 @@ const GroupBlock: FC<{}> = ({}) => {
   if (predictionsClosed) {
     return (
       <div className="flex flex-col justify-center items-center min-h-screen text-center px-3">
-        <h1 className="text-4xl font-bold font-mono">
+        <h1 className="text-4xl font-bold font-novaMono">
           Predictions are currently closed!
         </h1>
-        <h2 className="text-sm font-mono">
+        <h2 className="text-sm font-novaMono">
           Bracket stage predictions will open after the group stage is finished.
         </h2>
       </div>
@@ -226,7 +226,7 @@ const GroupBlock: FC<{}> = ({}) => {
 
   if (!id) {
     return (
-      <div className="font-mono flex flex-row items-center justify-center">
+      <div className="font-novaMono flex flex-row items-center justify-center">
         No group ID provided!
       </div>
     );
@@ -237,7 +237,7 @@ const GroupBlock: FC<{}> = ({}) => {
   }
 
   return (
-    <div className="min-h-screen font-mono flex flex-col items-center justify-center my-6">
+    <div className="min-h-screen font-novaMono flex flex-col items-center justify-center my-6">
       <motion.div
         className="flex flex-col items-center justify-center gap-4"
         initial={{ opacity: 0 }}

@@ -24,7 +24,7 @@ const TeamBlock = (props: TeamBlockProps) => {
         bgColor
       }
     >
-      <p className="text-lg font-normal">{team.name}</p>
+      <p className="text-lg font-bold">{team.name}</p>
       <TeamFlag team={team} width={flagWidth} />
     </div>
   );
@@ -98,7 +98,7 @@ const AdminControls = (props: AdminControlsProps) => {
           <AddButton />
         </div>
 
-        <p className="text-2xl">
+        <p className="text-2xl font-bold">
           {homeGoals} - {awayGoals}
         </p>
         <div className="ml-4 space-x-2">
@@ -107,7 +107,7 @@ const AdminControls = (props: AdminControlsProps) => {
         </div>
       </div>
       <button
-        className="bg-gray-500 rounded-full w-20 font-mono text-sm hover:bg-slate-700 transition-all"
+        className="bg-gray-500 rounded-full w-20 font-novaMono text-sm hover:bg-slate-700 transition-all"
         onClick={() => saveGame()}
       >
         {game.finished ? "Update" : "Save"}
@@ -133,25 +133,25 @@ const GameBlock = (props: GameBlockProps) => {
     if (game.finished) {
       return (
         <div className="flex flex-col text-center w-44">
-          <p className="text-2xl">
+          <p className="text-2xl font-bold">
             {game.homeGoals} - {game.awayGoals}
           </p>
-          <p className="text-xs italic">{date}</p>
+          <p className="text-sm italic">{date}</p>
         </div>
       );
     }
 
     return (
       <div className="flex flex-col text-center w-44">
-        <p className="text-2xl">vs</p>
-        <p className="text-xs italic">{date}</p>
+        <p className="text-2xl font-bold">vs</p>
+        <p className="text-sm italic">{date}</p>
       </div>
     );
   };
 
   const MainContent = () => {
     return (
-      <div className="font-mono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-10 lg:mb-0">
+      <div className="font-novaMono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-10 lg:mb-0">
         <TeamBlock
           team={game.homeTeam}
           winner={game.winner == game.homeTeam.id}
@@ -171,7 +171,7 @@ const GameBlock = (props: GameBlockProps) => {
 
   return (
     <Link to={`/game/${game.id}`}>
-      <div className=" p-2 font-mono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-6 lg:mb-0 hover:cursor-pointer hover:bg-gray-700/70 rounded-xl transition-all">
+      <div className=" p-2 font-novaMono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-6 lg:mb-0 hover:cursor-pointer hover:bg-gray-700/70 rounded-xl transition-all">
         <TeamBlock
           team={game.homeTeam}
           winner={game.winner == game.homeTeam.id}
@@ -207,7 +207,7 @@ const Schedule: FC<{}> = ({}) => {
   }
 
   return (
-    <div className="min-h-screen font-mono flex flex-col items-center justify-center my-10">
+    <div className="min-h-screen font-novaMono flex flex-col items-center justify-center my-10">
       <motion.div
         className="flex flex-col items-center justify-center gap-2"
         initial={{ opacity: 0 }}
@@ -218,7 +218,10 @@ const Schedule: FC<{}> = ({}) => {
           Schedule
         </h1>
         {isAdmin && (
-          <button className="bg-secondary/40 p-2 rounded-xl font-bold hover:bg-secondary/80 transition-all text-center" onClick={() => setAdminMode(!adminMode)}>
+          <button
+            className="bg-secondary/40 p-2 rounded-xl font-bold hover:bg-secondary/80 transition-all text-center"
+            onClick={() => setAdminMode(!adminMode)}
+          >
             Toggle edit
           </button>
         )}

@@ -35,10 +35,10 @@ const Predict: React.FC<{}> = () => {
   if (predictionsClosed) {
     return (
       <div className="flex flex-col justify-center items-center min-h-screen text-center px-3">
-        <h1 className="text-4xl font-bold font-mono">
+        <h1 className="text-4xl font-bold font-novaMono">
           Predictions are currently closed!
         </h1>
-        <h2 className="text-sm font-mono">
+        <h2 className="text-sm font-novaMono">
           Bracket stage predictions will open after the group stage is finished.
         </h2>
       </div>
@@ -64,7 +64,7 @@ const Predict: React.FC<{}> = () => {
       </div>
       <Link to="/predict/group/a">
         <button
-          className="mb-6 hover:cursor-pointer text-center bg-gradient-to-r from-primary to-secondary text-white transition-all w-32 hover:w-36 hover:text-gray-400 p-2 rounded-xl font-bold"
+          className="font-novaMono mb-6 hover:cursor-pointer text-center bg-gradient-to-r from-primary to-secondary text-white transition-all w-32 hover:w-36 hover:text-gray-400 p-2 rounded-xl font-bold"
           onClick={() => {
             dispatch(savePredictions());
           }}

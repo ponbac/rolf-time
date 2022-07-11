@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FC, useEffect, useState } from "react";
 import { fetchGames, fetchUser } from "../../utils/dataFetcher";
 import TeamFlag from "../../components/TeamFlag";
@@ -15,17 +15,17 @@ const PredictedGroup = (props: PredictedGroupProps) => {
 
   const TeamItem = (props: { team: Team; placing: number; key: string }) => {
     return (
-      <div className="gap-2 w-64 hover:bg-primary/30 transition-all mx-2 flex flex-row items-center font-mono bg-gray-400/30 backdrop-blur-sm py-2 px-4 rounded-lg">
+      <div className="gap-2 w-64 hover:bg-primary/30 transition-all mx-2 flex flex-row items-center font-novaMono bg-gray-400/30 backdrop-blur-sm py-2 px-4 rounded-lg">
         <p className={"font-bold"}>{props.placing}.</p>
         <TeamFlag team={props.team} width="2.0rem" />
-        <h1>{props.team.name}</h1>
+        <h1 className="font-bold">{props.team.name}</h1>
       </div>
     );
   };
 
   return (
     <div className="flex flex-col items-center">
-      <p className="text-xl font-bold font-mono">Group {groupName}</p>
+      <p className="text-2xl font-bold font-novaMono">Group {groupName}</p>
       <div className="pt-2 space-y-1">
         {teams.map((team, placing) => (
           <TeamItem team={team} placing={placing + 1} key={team.name} />
@@ -76,31 +76,33 @@ const PredictedGames = (props: PredictedGamesProps) => {
     };
 
     return (
-      <div className="font-mono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-10 lg:mb-0">
-        <TeamBlock
-          team={game.homeTeam}
-          away={false}
-          selected={game.homeTeam.id == prediction.winner}
-        />
-        <div className="flex flex-col text-center">
-          <div className="flex flex-col items-center justify-center">
-            <p className="text-2xl">
-              {prediction.homeGoals} - {prediction.awayGoals}
-            </p>
-            {game.finished && (
-              <p className={"text-xs " + resultTextColor()}>
-                ({game.homeGoals} - {game.awayGoals}){" "}
-                {correctScore ? "+4" : correctPrediction ? "+3" : ""}
+      <Link to={`/game/${game.id}`}>
+        <div className="p-2 hover:bg-gray-700/70 rounded-xl transition-all font-novaMono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-10 lg:mb-0">
+          <TeamBlock
+            team={game.homeTeam}
+            away={false}
+            selected={game.homeTeam.id == prediction.winner}
+          />
+          <div className="flex flex-col text-center">
+            <div className="flex flex-col items-center justify-center">
+              <p className="text-2xl font-bold">
+                {prediction.homeGoals} - {prediction.awayGoals}
               </p>
-            )}
+              {game.finished && (
+                <p className={"text-sm " + resultTextColor()}>
+                  ({game.homeGoals} - {game.awayGoals}){" "}
+                  {correctScore ? "+4" : correctPrediction ? "+3" : ""}
+                </p>
+              )}
+            </div>
           </div>
+          <TeamBlock
+            team={game.awayTeam}
+            away={true}
+            selected={game.awayTeam.id == prediction.winner}
+          />
         </div>
-        <TeamBlock
-          team={game.awayTeam}
-          away={true}
-          selected={game.awayTeam.id == prediction.winner}
-        />
-      </div>
+      </Link>
     );
   };
 
@@ -109,10 +111,10 @@ const PredictedGames = (props: PredictedGamesProps) => {
       <div className="py-2 space-y-8">
         {predictions.map((p) => (
           <div
-            className="flex flex-col gap-2 justify-center items-center"
+            className="flex flex-col  justify-center items-center"
             key={p.groupId}
           >
-            <p className="text-xl font-bold font-mono">Group {p.groupId}</p>
+            <p className="text-3xl font-bold font-novaMono">Group {p.groupId}</p>
             {p.games.map((gamePrediction) => (
               <PredictionItem
                 prediction={gamePrediction}
@@ -152,7 +154,7 @@ const UserPredictions = () => {
 
   if (!id) {
     return (
-      <div className="font-mono flex flex-row items-center justify-center">
+      <div className="font-novaMono flex flex-row items-center justify-center">
         No user ID!
       </div>
     );
@@ -164,14 +166,14 @@ const UserPredictions = () => {
 
   if (!isLoading && predictions == undefined) {
     return (
-      <div className="font-mono flex flex-row items-center justify-center min-h-screen text-4xl">
+      <div className="font-novaMono flex flex-row items-center justify-center min-h-screen text-4xl">
         This user has no predictions saved!
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen font-mono flex flex-col items-center justify-center my-6">
+    <div className="min-h-screen font-novaMono flex flex-col items-center justify-center my-6">
       <motion.div
         className=""
         initial={{ opacity: 0 }}
@@ -182,7 +184,9 @@ const UserPredictions = () => {
           <p className="text-center text-7xl font-bold font-novaMono pb-3 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
             {user?.name}
           </p>
-          <p className="text-3xl font-bold font-mono italic">{user?.score}p</p>
+          <p className="text-4xl font-bold font-novaMono italic">
+            {user?.score}p
+          </p>
         </div>
         {predictions && (
           <>
@@ -195,7 +199,7 @@ const UserPredictions = () => {
                 />
               ))}
             </div>
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col justify-center items-center pt-8">
               <PredictedGames predictions={predictions} />
             </div>
           </>

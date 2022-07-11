@@ -4,7 +4,7 @@ import Header from "../components/Header";
 
 const HoFItem: FC<{}> = () => {
   return (
-    <div className="hover:bg-primary/40 transition-all mx-2 flex flex-row items-center justify-center gap-5 lg:gap-11 font-mono bg-gray-400/40 backdrop-blur-sm py-2 px-8 rounded-lg">
+    <div className="hover:bg-primary/40 transition-all mx-2 flex flex-row items-center justify-center gap-5 lg:gap-11 font-novaMono bg-gray-400/40 backdrop-blur-sm py-2 px-8 rounded-lg">
       <h1 className={`text-4xl font-bold text-center`}>🏆 EM 20/21</h1>
       <div className="text-center">
         <h1 className="text-xl font-bold">Jesper Kjellsson</h1>

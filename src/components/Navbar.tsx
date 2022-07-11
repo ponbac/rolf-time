@@ -58,25 +58,25 @@ const Navbar: FC<{}> = ({}) => {
           <Link to="/">
             <div className="flex flex-col items-center hover:cursor-pointer hover:italic">
               <HomeIcon className="fill-white w-14 h-14 transition-all " />
-              <p className="text-xs font-mono font-bold">Home</p>
+              <p className="text-xs font-novaMono font-bold">Home</p>
             </div>
           </Link>
           <Link to="/predict">
             <div className="flex flex-col items-center hover:cursor-pointer hover:italic">
               <SportsSoccerIcon className="fill-white w-14 h-14 transition-all " />
-              <p className="text-xs font-mono font-bold">Predict</p>
+              <p className="text-xs font-novaMono font-bold">Predict</p>
             </div>
           </Link>
           <Link to="/schedule">
             <div className="flex flex-col items-center hover:cursor-pointer hover:italic">
               <ScheduleIcon className="fill-white w-14 h-14 transition-all " />
-              <p className="text-xs font-mono font-bold">Schedule</p>
+              <p className="text-xs font-novaMono font-bold">Schedule</p>
             </div>
           </Link>
           <Link to="/halloffame">
             <div className="flex flex-col items-center hover:cursor-pointer hover:italic">
               <EmojiEventsIcon className="fill-white w-14 h-14 transition-all " />
-              <p className="text-xs font-mono font-bold">HoF</p>
+              <p className="text-xs font-novaMono font-bold">HoF</p>
             </div>
           </Link>
           <div
@@ -84,7 +84,7 @@ const Navbar: FC<{}> = ({}) => {
             className="flex flex-col items-center hover:cursor-pointer hover:italic"
           >
             <LogoutIcon className="fill-white w-14 h-14 transition-all " />
-            <p className="text-xs font-mono font-bold">Exit</p>
+            <p className="text-xs font-novaMono font-bold">Exit</p>
           </div>
         </div>
       </div>
@@ -110,25 +110,25 @@ const Navbar: FC<{}> = ({}) => {
       <Link to="/">
         <div className="mt-12 flex flex-col items-center hover:cursor-pointer hover:italic">
           <HomeIcon className="fill-white w-14 h-14 transition-all " />
-          <p className="text-white font-semibold text-sm font-mono">Home</p>
+          <p className="text-white font-semibold text-sm font-novaMono">Home</p>
         </div>
       </Link>
       <Link to="/predict">
         <div className="mt-4 flex flex-col items-center hover:cursor-pointer hover:italic">
           <SportsSoccerIcon className="fill-white w-14 h-14 transition-all " />
-          <p className="text-white font-semibold text-sm font-mono">Predict</p>
+          <p className="text-white font-semibold text-sm font-novaMono">Predict</p>
         </div>
       </Link>
       <Link to="/schedule">
         <div className="mt-4 flex flex-col items-center hover:cursor-pointer hover:italic">
           <ScheduleIcon className="fill-white w-14 h-14 transition-all " />
-          <p className="text-white font-semibold text-sm font-mono">Schedule</p>
+          <p className="text-white font-semibold text-sm font-novaMono">Schedule</p>
         </div>
       </Link>
       <Link to="/halloffame">
         <div className="mt-4 flex flex-col items-center hover:cursor-pointer hover:italic">
           <EmojiEventsIcon className="fill-white w-14 h-14 transition-all " />
-          <p className="text-white font-semibold text-sm font-mono">HoF</p>
+          <p className="text-white font-semibold text-sm font-novaMono">HoF</p>
         </div>
       </Link>
       <div
@@ -136,7 +136,7 @@ const Navbar: FC<{}> = ({}) => {
         className="absolute bottom-3 mt-4 flex flex-col items-center hover:cursor-pointer hover:italic"
       >
         <LogoutIcon className="fill-white w-14 h-14 transition-all " />
-        <p className="text-white font-semibold text-sm font-mono">Logout</p>
+        <p className="text-white font-semibold text-sm font-novaMono">Logout</p>
       </div>
     </div>
   );
