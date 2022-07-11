@@ -116,13 +116,17 @@ const AdminControls = (props: AdminControlsProps) => {
   );
 };
 
-const GameBlock: FC<{ game: Game }> = ({ game }) => {
-  const isAdmin = useAppSelector(selectIsAdmin);
+type GameBlockProps = {
+  game: Game;
+  adminMode?: boolean;
+};
+const GameBlock = (props: GameBlockProps) => {
+  const { game, adminMode = false } = props;
 
   let date = moment(game.date).format("dddd DD/MM, HH:mm");
 
   const MiddleSection = () => {
-    if (isAdmin) {
+    if (adminMode) {
       return <AdminControls game={game} />;
     }
 
@@ -161,7 +165,7 @@ const GameBlock: FC<{ game: Game }> = ({ game }) => {
     );
   };
 
-  if (isAdmin) {
+  if (adminMode) {
     return <MainContent />;
   }
 
@@ -186,6 +190,8 @@ const Schedule: FC<{}> = ({}) => {
   //const { games, isLoading, isError } = useGames();
   const [games, setGames] = useState<Game[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [adminMode, setAdminMode] = useState<boolean>(false);
+  const isAdmin = useAppSelector(selectIsAdmin);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -211,10 +217,17 @@ const Schedule: FC<{}> = ({}) => {
         <h1 className="text-6xl font-bold font-novaMono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary mb-2">
           Schedule
         </h1>
+        {isAdmin && (
+          <button className="bg-secondary/40 p-2 rounded-xl font-bold hover:bg-secondary/80 transition-all text-center" onClick={() => setAdminMode(!adminMode)}>
+            Toggle edit
+          </button>
+        )}
         {games &&
           games
             ?.sort((a, b) => a.date.localeCompare(b.date))
-            .map((game) => <GameBlock key={game.id} game={game} />)}
+            .map((game) => (
+              <GameBlock key={game.id} game={game} adminMode={adminMode} />
+            ))}
       </motion.div>
     </div>
   );
