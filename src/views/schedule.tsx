@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import moment from "moment";
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LoadingIndicator from "../components/LoadingIndicator";
 import TeamFlag from "../components/TeamFlag";
-import { selectIsAdmin, selectUser } from "../features/auth/authSlice";
+import { selectIsAdmin } from "../features/auth/authSlice";
 import { fetchGames, updateGame } from "../utils/dataFetcher";
 import { useAppSelector } from "../utils/store";
 

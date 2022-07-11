@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link, useParams } from "react-router-dom";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchGames, fetchUser } from "../../utils/dataFetcher";
 import TeamFlag from "../../components/TeamFlag";
 import { TeamBlock } from "../predict/[groupId]";

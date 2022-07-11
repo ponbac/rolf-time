@@ -1,6 +1,5 @@
 import { useDispatch } from "react-redux";
-import { login, signedIn, signedOut } from "../../features/auth/authSlice";
-import { APP_URL } from "../../utils/constants";
+import { login, signedOut } from "../../features/auth/authSlice";
 import { SUPABASE, updateUserData } from "../../utils/dataFetcher";
 import { useAppDispatch } from "../../utils/store";
 
