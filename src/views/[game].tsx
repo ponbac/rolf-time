@@ -37,12 +37,12 @@ const GameBox = (props: GameBoxProps) => {
 };
 
 type PredictionsListProps = {
+  users: PlayerUser[];
   game: Game;
   className?: string;
 };
 const PredictionsList = (props: PredictionsListProps) => {
-  const { game, className } = props;
-  const [users, setUsers] = useState<PlayerUser[] | undefined>(undefined);
+  const { users, game, className } = props;
 
   const UserItem = (props: { user: PlayerUser; game: Game }) => {
     const { user, game } = props;
@@ -97,12 +97,6 @@ const PredictionsList = (props: PredictionsListProps) => {
     );
   };
 
-  useEffect(() => {
-    fetchAllUsers().then((users) => {
-      setUsers(users);
-    });
-  }, []);
-
   if (!users) {
     return <LoadingIndicator />;
   }
@@ -126,16 +120,20 @@ const GameView = (props: GameViewProps) => {
   const { id } = params;
 
   const [game, setGame] = useState<Game | undefined>(undefined);
+  const [users, setUsers] = useState<PlayerUser[] | undefined>(undefined);
 
   useEffect(() => {
     if (id) {
       fetchGame(id).then((game) => {
         setGame(game);
       });
+      fetchAllUsers().then((users) => {
+        setUsers(users);
+      });
     }
   }, [id]);
 
-  if (!game) {
+  if (!game || !users) {
     return <LoadingIndicator fullscreen={true} />;
   }
 
@@ -144,11 +142,11 @@ const GameView = (props: GameViewProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.50 }}
+      transition={{ duration: 0.5 }}
     >
       <div className="flex flex-col items-center justify-center min-h-screen font-novaMono">
         <GameBox game={game} />
-        <PredictionsList game={game} className="mt-8" />
+        <PredictionsList users={users} game={game} className="mt-8" />
       </div>
     </motion.div>
   );
