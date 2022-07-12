@@ -28,6 +28,11 @@ const GameBox = (props: GameBoxProps) => {
         />
       </div>
       <div className="flex flex-col items-center justify-center">
+        {game.finished && (
+          <p className="text-3xl font-bold">
+            {game.homeGoals} - {game.awayGoals}
+          </p>
+        )}
         <p className="text-lg text-center">
           {moment(game.date).format("dddd DD/MM, HH:mm")}
         </p>
@@ -62,6 +67,25 @@ const PredictionsList = (props: PredictionsListProps) => {
       }
     };
 
+    const resultBgColor = () => {
+      if (prediction && game.finished) {
+        game.winner = game.winner == null ? -1 : game.winner;
+        const correctPrediction = prediction.winner == game.winner;
+        const correctScore =
+          prediction.homeGoals == game.homeGoals &&
+          prediction.awayGoals == game.awayGoals;
+        if (correctScore) {
+          return "bg-blue-400/40";
+        } else if (correctPrediction) {
+          return "bg-green-400/40";
+        } else {
+          return "bg-red-500/40";
+        }
+      }
+
+      return "bg-gray-400/40";
+    };
+
     useEffect(() => {
       const prediction = findPrediction(game);
       setPrediction(prediction);
@@ -70,9 +94,7 @@ const PredictionsList = (props: PredictionsListProps) => {
     return (
       <Link to={`/profile/${user.id}`}>
         <div
-          className={
-            "flex flex-row w-[22rem] lg:w-96 items-center bg-gray-400/40 rounded-xl gap-6 p-2 hover:bg-primary/40 transition-all"
-          }
+          className={`${resultBgColor()} flex flex-row w-[22rem] lg:w-96 items-center rounded-xl gap-6 p-2 hover:bg-primary/40 transition-all`}
         >
           <img
             className="object-cover rounded-full p-1 ring-2 hover:ring-4 transition-all ring-primary w-16 h-16"

@@ -31,18 +31,36 @@ const UpcomingGame = (props: UpcomingGameProps) => {
     }
   };
 
+  const resultTextColor = () => {
+    if (prediction && game?.finished) {
+      game.winner = game.winner == null ? -1 : game.winner;
+      const correctPrediction = prediction.winner == game.winner;
+      const correctScore =
+        prediction.homeGoals == game.homeGoals &&
+        prediction.awayGoals == game.awayGoals;
+      if (correctScore) {
+        return "text-blue-400";
+      } else if (correctPrediction) {
+        return "text-green-500";
+      } else {
+        return "text-red-600/80";
+      }
+    }
+  };
+
   useEffect(() => {
     const sortedGames = games.sort((a, b) => a.date.localeCompare(b.date));
 
     let nextGameIndex = 0;
     for (const g of sortedGames) {
-      if (moment(g.date).isAfter(moment().subtract(105, "minutes"))) {
+      if (moment(g.date).isAfter(moment().subtract(115, "minutes"))) {
         break;
       }
       nextGameIndex++;
     }
 
     const nextGame = sortedGames[nextGameIndex + offset];
+    //const nextGame = sortedGames[4 + offset];
 
     setGame(nextGame);
     setDate(moment(nextGame.date).format("dddd DD/MM, HH:mm"));
@@ -70,6 +88,11 @@ const UpcomingGame = (props: UpcomingGameProps) => {
           />
         </div>
         <div className="flex flex-col items-center justify-center">
+          {game.finished && (
+            <p className={`font-bold text-3xl ${resultTextColor()}`}>
+              {game.homeGoals} - {game.awayGoals}
+            </p>
+          )}
           <p className="text-md text-center">{date}</p>
           {prediction && (
             <p className="text-sm italic text-center">

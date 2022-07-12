@@ -61,6 +61,7 @@ const PredictedGames = (props: PredictedGamesProps) => {
       return null;
     }
 
+    game.winner = game.winner == null ? -1 : game.winner;
     const correctPrediction = prediction.winner == game.winner;
     const correctScore =
       prediction.homeGoals == game.homeGoals &&
@@ -114,7 +115,9 @@ const PredictedGames = (props: PredictedGamesProps) => {
             className="flex flex-col  justify-center items-center"
             key={p.groupId}
           >
-            <p className="text-3xl font-bold font-novaMono">Group {p.groupId}</p>
+            <p className="text-3xl font-bold font-novaMono">
+              Group {p.groupId}
+            </p>
             {p.games.map((gamePrediction) => (
               <PredictionItem
                 prediction={gamePrediction}
