@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import moment from "moment";
 import { FC, useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import LoadingIndicator from "../components/LoadingIndicator";
 import TeamFlag from "../components/TeamFlag";
@@ -186,20 +187,13 @@ const GameBlock = (props: GameBlockProps) => {
   );
 };
 
-const Schedule: FC<{}> = ({}) => {
-  //const { games, isLoading, isError } = useGames();
-  const [games, setGames] = useState<Game[]>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+const Schedule = () => {
+  const { data: games, isLoading, error } = useQuery("games", fetchGames);
   const [adminMode, setAdminMode] = useState<boolean>(false);
   const isAdmin = useAppSelector(selectIsAdmin);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setIsLoading(true);
-    fetchGames().then((g) => {
-      setGames(g);
-      setIsLoading(false);
-    });
   }, []);
 
   if (isLoading) {

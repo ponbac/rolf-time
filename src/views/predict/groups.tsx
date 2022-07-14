@@ -25,11 +25,13 @@ const Predict: React.FC<{}> = () => {
       setPredictionsClosed(true);
     }
 
-    setIsLoading(true);
-    fetchGroups().then((g) => {
-      setGroups(g);
-      setIsLoading(false);
-    });
+    if (!predictionsClosed) {
+      setIsLoading(true);
+      fetchGroups().then((g) => {
+        setGroups(g);
+        setIsLoading(false);
+      });
+    }
   }, []);
 
   if (predictionsClosed) {

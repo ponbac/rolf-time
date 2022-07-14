@@ -15,29 +15,34 @@ import UserProfile from "./views/profile/[user]";
 import UserPredictions from "./views/profile/predictions";
 import LoginView from "./views/login";
 import GameView from "./views/[game]";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Home />} />
-            <Route path="profile/update" element={<UpdateProfile />} />
-            <Route path="profile/:id" element={<UserProfile />} />
-            <Route
-              path="profile/:id/predictions"
-              element={<UserPredictions />}
-            />
-            <Route path="/game/:id" element={<GameView />} />
-            <Route path="predict" element={<Predict />} />
-            <Route path="predict/group/:id" element={<GroupBlock />} />
-            <Route path="schedule" element={<Schedule />} />
-            <Route path="halloffame" element={<HallOfFame />} />
-          </Routes>
-        </Layout>
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Home />} />
+              <Route path="profile/update" element={<UpdateProfile />} />
+              <Route path="profile/:id" element={<UserProfile />} />
+              <Route
+                path="profile/:id/predictions"
+                element={<UserPredictions />}
+              />
+              <Route path="/game/:id" element={<GameView />} />
+              <Route path="predict" element={<Predict />} />
+              <Route path="predict/group/:id" element={<GroupBlock />} />
+              <Route path="schedule" element={<Schedule />} />
+              <Route path="halloffame" element={<HallOfFame />} />
+            </Routes>
+          </Layout>
+        </BrowserRouter>
+      </QueryClientProvider>
     </Provider>
   </React.StrictMode>
 );

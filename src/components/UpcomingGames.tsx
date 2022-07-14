@@ -1,5 +1,6 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { selectPredictions } from "../features/predict/predictSlice";
 import { fetchGames } from "../utils/dataFetcher";
@@ -106,15 +107,7 @@ const UpcomingGame = (props: UpcomingGameProps) => {
 };
 
 const UpcomingGames = () => {
-  const [games, setGames] = useState<Game[] | undefined>(undefined);
-
-  useEffect(() => {
-    fetchGames().then((games) => {
-      if (games) {
-        setGames(games);
-      }
-    });
-  }, []);
+  const { data: games, isLoading, error } = useQuery("games", fetchGames);
 
   if (!games) {
     return (
