@@ -5,6 +5,7 @@ import { fetchGames, fetchUser } from "../../utils/dataFetcher";
 import TeamFlag from "../../components/TeamFlag";
 import { TeamBlock } from "../predict/[groupId]";
 import LoadingIndicator from "../../components/LoadingIndicator";
+import { useQuery } from "react-query";
 
 type PredictedGroupProps = {
   groupName: string;
@@ -40,15 +41,11 @@ type PredictedGamesProps = {
 };
 const PredictedGames = (props: PredictedGamesProps) => {
   const { predictions } = props;
-  const [games, setGames] = useState<Game[]>([]);
+  const { data: games } = useQuery("games", fetchGames);
 
-  useEffect(() => {
-    fetchGames().then((games) => {
-      if (games) {
-        setGames(games);
-      }
-    });
-  }, []);
+  if (!games) {
+    return <LoadingIndicator />;
+  }
 
   const PredictionItem = (props: {
     prediction: GamePrediction;

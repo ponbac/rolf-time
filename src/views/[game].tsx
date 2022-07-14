@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Link, useParams } from "react-router-dom";
 import LoadingIndicator from "../components/LoadingIndicator";
 import TeamFlag from "../components/TeamFlag";
@@ -142,15 +143,12 @@ const GameView = (props: GameViewProps) => {
   const { id } = params;
 
   const [game, setGame] = useState<Game | undefined>(undefined);
-  const [users, setUsers] = useState<PlayerUser[] | undefined>(undefined);
+  const { data: users } = useQuery("users", fetchAllUsers);
 
   useEffect(() => {
     if (id) {
       fetchGame(id).then((game) => {
         setGame(game);
-      });
-      fetchAllUsers().then((users) => {
-        setUsers(users);
       });
     }
   }, [id]);

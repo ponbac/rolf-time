@@ -1,13 +1,17 @@
 import { motion } from "framer-motion";
 import { FC, useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { fetchAllUsers } from "../utils/dataFetcher";
 import LoadingIndicator from "./LoadingIndicator";
 
-const PlayerItem: FC<{
+type PlayerItemProps = {
   rank: number;
   player: PlayerUser;
-}> = ({ rank, player }) => {
+};
+const PlayerItem = (props: PlayerItemProps) => {
+  const { rank, player } = props;
+
   const rankColor = (rank: number): string => {
     switch (rank) {
       case 1:
@@ -51,7 +55,11 @@ const PlayerItem: FC<{
   );
 };
 
-const PlayerList: FC<{ players: PlayerUser[] }> = ({ players }) => {
+type PlayerListProps = {
+  players: PlayerUser[];
+};
+const PlayerList = (props: PlayerListProps) => {
+  const { players } = props;
   players.sort((a, b) => b.score - a.score);
   return (
     <ul className="space-y-2">
@@ -62,17 +70,12 @@ const PlayerList: FC<{ players: PlayerUser[] }> = ({ players }) => {
   );
 };
 
-const Leaderboard: FC<{}> = () => {
-  const [players, setPlayers] = useState<PlayerUser[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setIsLoading(true);
-    fetchAllUsers().then((data) => {
-      setPlayers(data);
-      setIsLoading(false);
-    });
-  }, []);
+const Leaderboard = () => {
+  const {
+    data: players,
+    isLoading,
+    error,
+  } = useQuery("users", fetchAllUsers);
 
   if (isLoading) {
     return <LoadingIndicator />;
