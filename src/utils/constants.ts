@@ -1,6 +1,6 @@
 export const APP_URL = (): string =>
-  window.location.host == "localhost:5174"
-    ? "http://localhost:5174"
+  window.location.host == "localhost:5173"
+    ? "http://localhost:5173"
     : "https://england.backman.app";
 
 export const GROUPS = ["A", "B", "C", "D"];
