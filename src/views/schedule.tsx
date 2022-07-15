@@ -239,14 +239,11 @@ const Schedule = () => {
           </button>
         )}
         <Collapsible
-          onOpen={() => setShowFinished(true)}
-          onClose={() => setShowFinished(false)}
+          onTriggerOpening={() => setShowFinished(true)}
+          onTriggerClosing={() => setShowFinished(false)}
           trigger={
             <div className="p-2 flex items-center justify-center bg-secondary/40 hover:bg-secondary/80 transition-all rounded-xl text-center">
-              <button
-                className="font-bold"
-                onClick={() => setShowFinished(!showFinished)}
-              >
+              <button className="font-bold">
                 {showFinished ? "Hide" : "Show"} played games{" "}
                 <span className="">{showFinished ? <></> : <>&#8964;</>}</span>
               </button>
