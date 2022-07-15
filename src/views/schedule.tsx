@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import moment from "moment";
 import { FC, useEffect, useState } from "react";
+import Collapsible from "react-collapsible";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import LoadingIndicator from "../components/LoadingIndicator";
@@ -189,6 +190,9 @@ const GameBlock = (props: GameBlockProps) => {
 
 const Schedule = () => {
   const { data: games, isLoading, error } = useQuery("games", fetchGames);
+  const [finishedGames, setFinishedGames] = useState<Game[]>([]);
+  const [showFinished, setShowFinished] = useState<boolean>(false);
+  const [upcomingGames, setUpcomingGames] = useState<Game[]>([]);
   const [adminMode, setAdminMode] = useState<boolean>(false);
   const isAdmin = useAppSelector(selectIsAdmin);
 
@@ -196,7 +200,22 @@ const Schedule = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  if (isLoading) {
+  useEffect(() => {
+    if (games) {
+      setFinishedGames(
+        games
+          .filter((game) => game.finished)
+          .sort((a, b) => a.date.localeCompare(b.date))
+      );
+      setUpcomingGames(
+        games
+          .filter((game) => !game.finished)
+          .sort((a, b) => a.date.localeCompare(b.date))
+      );
+    }
+  }, [games]);
+
+  if (!games) {
     return <LoadingIndicator fullscreen={true} />;
   }
 
@@ -219,12 +238,29 @@ const Schedule = () => {
             Toggle edit
           </button>
         )}
-        {games &&
-          games
-            ?.sort((a, b) => a.date.localeCompare(b.date))
-            .map((game) => (
-              <GameBlock key={game.id} game={game} adminMode={adminMode} />
-            ))}
+        <Collapsible
+          onOpen={() => setShowFinished(true)}
+          onClose={() => setShowFinished(false)}
+          trigger={
+            <div className="p-2 flex items-center justify-center bg-secondary/40 hover:bg-secondary/80 transition-all rounded-xl text-center">
+              <button
+                className="font-bold"
+                onClick={() => setShowFinished(!showFinished)}
+              >
+                {showFinished ? "Hide" : "Show"} played games{" "}
+                <span className="">{showFinished ? <></> : <>&#8964;</>}</span>
+              </button>
+            </div>
+          }
+          triggerStyle={{ textAlign: "center" }}
+        >
+          {finishedGames.map((game) => (
+            <GameBlock key={game.id} game={game} adminMode={adminMode} />
+          ))}
+        </Collapsible>
+        {upcomingGames.map((game) => (
+          <GameBlock key={game.id} game={game} adminMode={adminMode} />
+        ))}
       </motion.div>
     </div>
   );
