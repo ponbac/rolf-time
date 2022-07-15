@@ -107,7 +107,11 @@ const UpcomingGame = (props: UpcomingGameProps) => {
 };
 
 const UpcomingGames = () => {
-  const { data: games, isLoading, error } = useQuery("games", fetchGames);
+  const {
+    data: games,
+    isLoading,
+    error,
+  } = useQuery("games", fetchGames, { refetchInterval: 60 * 1000 });
 
   if (!games) {
     return (

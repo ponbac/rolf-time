@@ -75,7 +75,7 @@ const Leaderboard = () => {
     data: players,
     isLoading,
     error,
-  } = useQuery("users", fetchAllUsers);
+  } = useQuery("users", fetchAllUsers, { refetchInterval: 60 * 1000 });
 
   if (isLoading) {
     return <LoadingIndicator />;
