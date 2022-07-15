@@ -37,9 +37,6 @@ const Head: FC<{ user?: PlayerUser }> = ({ user }) => {
 };
 
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
-  const [introVisible, setIntroVisible] = useState(true);
-  const introDuration: number = 2.0;
-
   const user = useSelector(selectUser);
   const authState = useSelector(selectAuthState);
   const dispatch = useAppDispatch();
@@ -124,29 +121,10 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
     <>
       <Head user={authState.user ?? undefined} />
       <div className="min-h-screen flex flex-col">
-        {introVisible && (
-          <motion.div
-            className="min-h-screen flex items-center justify-center"
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 0 }}
-            transition={{ duration: introDuration }}
-            onAnimationStart={() =>
-              document.body.classList.add("overflow-hidden")
-            }
-            onAnimationComplete={() => {
-              document.body.classList.remove("overflow-hidden");
-              setIntroVisible(false);
-            }}
-          >
-            <h1 className="px-4 text-center animate-bounce h-full lg:h-48 font-novaMono font-extrabold text-transparent text-7xl lg:text-8xl bg-clip-text bg-gradient-to-r from-primary to-secondary">
-              Let&apos;s go Sweden!
-            </h1>
-          </motion.div>
-        )}
         <motion.div
           initial={{ y: 0, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: introDuration }}
+          transition={{ duration: 0.5 }}
           className="min-h-screen flex flex-col lg:flex-row"
         >
           <div className="fixed min-w-full lg:min-w-fit z-10">
