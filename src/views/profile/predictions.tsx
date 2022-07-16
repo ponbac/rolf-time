@@ -6,6 +6,7 @@ import TeamFlag from "../../components/TeamFlag";
 import { TeamBlock } from "../predict/[groupId]";
 import LoadingIndicator from "../../components/LoadingIndicator";
 import { useQuery } from "react-query";
+import { TBD_TEAM } from "../../utils/constants";
 
 type PredictedGroupProps = {
   groupName: string;
@@ -43,6 +44,18 @@ const PredictedGames = (props: PredictedGamesProps) => {
   const { predictions } = props;
   const { data: games } = useQuery("games", fetchGames);
 
+  const parseName = (groupName: string) => {
+    if (groupName.length == 1) {
+      return "Group " + groupName;
+    } else if (groupName == "QUARTERS") {
+      return "Quarterfinals";
+    } else if (groupName == "SEMIS") {
+      return "Semifinals";
+    } else if (groupName == "FINAL") {
+      return "Final";
+    }
+  };
+
   if (!games) {
     return <LoadingIndicator />;
   }
@@ -52,10 +65,17 @@ const PredictedGames = (props: PredictedGamesProps) => {
     key: string;
   }) => {
     const { prediction } = props;
-    const game = games.find((g) => g.id === props.prediction.id);
+    let game = games.find((g) => g.id === props.prediction.id);
 
     if (!game) {
       return null;
+    }
+
+    if (game.homeTeam === null) {
+      game.homeTeam = TBD_TEAM;
+    }
+    if (game.awayTeam === null) {
+      game.awayTeam = TBD_TEAM;
     }
 
     game.winner = game.winner == null ? -1 : game.winner;
@@ -74,7 +94,13 @@ const PredictedGames = (props: PredictedGamesProps) => {
     };
 
     return (
-      <Link to={`/game/${game.id}`}>
+      <Link
+        to={
+          (game.homeTeam.id == -1 || game.awayTeam.id == -1)
+            ? "/schedule"
+            : `/game/${game.id}`
+        }
+      >
         <div className="p-2 hover:bg-gray-700/70 rounded-xl transition-all font-novaMono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-10 lg:mb-0">
           <TeamBlock
             team={game.homeTeam}
@@ -113,7 +139,7 @@ const PredictedGames = (props: PredictedGamesProps) => {
             key={p.groupId}
           >
             <p className="text-3xl font-bold font-novaMono">
-              Group {p.groupId}
+              {parseName(p.groupId)}
             </p>
             {p.games.map((gamePrediction) => (
               <PredictionItem
@@ -191,13 +217,20 @@ const UserPredictions = () => {
         {predictions && (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 my-6">
-              {predictions.map((p) => (
-                <PredictedGroup
-                  groupName={p.groupId}
-                  teams={p.result}
-                  key={p.groupId}
-                />
-              ))}
+              {predictions.map((p) => {
+                // then it's not a group
+                if (p.groupId.length > 1) {
+                  return null;
+                }
+
+                return (
+                  <PredictedGroup
+                    groupName={p.groupId}
+                    teams={p.result}
+                    key={p.groupId}
+                  />
+                );
+              })}
             </div>
             <div className="flex flex-col justify-center items-center pt-8">
               <PredictedGames predictions={predictions} />

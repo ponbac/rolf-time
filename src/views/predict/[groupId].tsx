@@ -113,6 +113,8 @@ export const GameBlock = (props: GameBlockProps) => {
       winner = -1;
     }
 
+    console.log(winner)
+
     dispatch(
       predictGame({
         groupId: game.groupId,

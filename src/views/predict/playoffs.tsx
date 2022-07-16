@@ -11,21 +11,6 @@ import { useAppDispatch, useAppSelector } from "../../utils/store";
 import { findPrediction } from "../../utils/utils";
 import { GameBlock } from "./[groupId]";
 
-type PlayoffsPredictItemProps = {
-  game: Game;
-};
-const PlayoffsPredictItem = (props: PlayoffsPredictItemProps) => {
-  const { game } = props;
-
-  return (
-    <div key={game.id}>
-      <p>{game.date}</p>
-      <p>
-        {game.homeTeam?.name ?? "TBD"} vs {game.awayTeam?.name ?? "TBD"}
-      </p>
-    </div>
-  );
-};
 
 const PredictPlayoffs = () => {
   const { data: games, isLoading, error } = useQuery("games", fetchGames);
@@ -51,17 +36,20 @@ const PredictPlayoffs = () => {
       return [];
     }
 
-    if (teamOneId && teamTwoId && teamThreeId && teamFourId) {
+    if (
+      teamOneId != undefined &&
+      teamTwoId != undefined &&
+      teamThreeId != undefined &&
+      teamFourId != undefined
+    ) {
       const teamOne =
         quarters[0].homeTeam?.id == teamOneId
           ? quarters[0].homeTeam
           : quarters[0].awayTeam;
-
       const teamTwo =
         quarters[2].homeTeam?.id == teamTwoId
           ? quarters[2].homeTeam
           : quarters[2].awayTeam;
-
       const teamThree =
         quarters[1].homeTeam?.id == teamThreeId
           ? quarters[1].homeTeam
@@ -108,7 +96,7 @@ const PredictPlayoffs = () => {
       return [];
     }
 
-    if (teamOneId && teamTwoId) {
+    if (teamOneId != undefined && teamTwoId != undefined) {
       const teamOne =
         semis[0].homeTeam?.id == teamOneId
           ? semis[0].homeTeam
