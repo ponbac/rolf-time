@@ -42,6 +42,15 @@ const PredictPlayoffs = () => {
     const teamThreeId = findPrediction(quarters[1], predictions)?.winner;
     const teamFourId = findPrediction(quarters[3], predictions)?.winner;
 
+    if (
+      teamOneId == -1 ||
+      teamTwoId == -1 ||
+      teamThreeId == -1 ||
+      teamFourId == -1
+    ) {
+      return [];
+    }
+
     if (teamOneId && teamTwoId && teamThreeId && teamFourId) {
       const teamOne =
         quarters[0].homeTeam?.id == teamOneId
@@ -64,7 +73,7 @@ const PredictPlayoffs = () => {
 
       const semifinalOne: Game = {
         id: quarters[3].id + 1,
-        date: "",
+        date: "2022-07-26T21:00:00",
         homeTeam: teamOne,
         awayTeam: teamTwo,
         homeGoals: 0,
@@ -75,7 +84,7 @@ const PredictPlayoffs = () => {
       };
       const semifinalTwo: Game = {
         id: quarters[3].id + 2,
-        date: "",
+        date: "2022-07-27T21:00:00",
         homeTeam: teamThree,
         awayTeam: teamFour,
         homeGoals: 0,
@@ -95,6 +104,10 @@ const PredictPlayoffs = () => {
     const teamOneId = findPrediction(semis[0], predictions)?.winner;
     const teamTwoId = findPrediction(semis[1], predictions)?.winner;
 
+    if (teamOneId == -1 || teamTwoId == -1) {
+      return [];
+    }
+
     if (teamOneId && teamTwoId) {
       const teamOne =
         semis[0].homeTeam?.id == teamOneId
@@ -107,7 +120,7 @@ const PredictPlayoffs = () => {
 
       const final: Game = {
         id: semis[1].id + 1,
-        date: "",
+        date: "2022-07-31T18:00:00",
         homeTeam: teamOne,
         awayTeam: teamTwo,
         homeGoals: 0,
@@ -154,20 +167,30 @@ const PredictPlayoffs = () => {
         </div>
       )}
       {semis.length > 0 && (
-        <div className="flex flex-col items-center justify-center">
+        <motion.div
+          className="flex flex-col items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <h2 className="text-4xl font-bold mb-4">Semis</h2>
           {semis.map((game) => (
             <GameBlock game={game} />
           ))}
-        </div>
+        </motion.div>
       )}
       {final.length > 0 && (
-        <div className="flex flex-col items-center justify-center">
+        <motion.div
+          className="flex flex-col items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <h2 className="text-4xl font-bold mb-4">Final</h2>
           {final.map((game) => (
             <GameBlock game={game} />
           ))}
-        </div>
+        </motion.div>
       )}
       <Link to={"/"}>
         <button

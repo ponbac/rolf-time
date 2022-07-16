@@ -37,11 +37,15 @@ export const findPrediction = (
   game: Game,
   userPredictions: GroupPrediction[]
 ) => {
-  const group = userPredictions.find((p) => p.groupId === game.groupId);
-  if (group) {
-    const prediction = group.games.find((p) => p.id === game.id);
-    if (prediction) {
-      return prediction;
+  if (game) {
+    const group = userPredictions.find((p) => p.groupId === game.groupId);
+    if (group) {
+      const prediction = group.games.find((p) => p.id === game.id);
+      if (prediction) {
+        return prediction;
+      }
     }
   }
+
+  return undefined;
 };
