@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
@@ -6,17 +7,18 @@ import {
   savePredictions,
   selectPredictions,
 } from "../../features/predict/predictSlice";
+import { GROUP_PREDICTIONS_CLOSE } from "../../utils/constants";
 import { fetchGames } from "../../utils/dataFetcher";
 import { useAppDispatch, useAppSelector } from "../../utils/store";
 import { findPrediction } from "../../utils/utils";
 import { GameBlock } from "./[groupId]";
-
 
 const PredictPlayoffs = () => {
   const { data: games, isLoading, error } = useQuery("games", fetchGames);
   const [quarters, setQuarters] = useState<Game[]>([]);
   const [semis, setSemis] = useState<Game[]>([]);
   const [final, setFinal] = useState<Game[]>([]);
+  const [predictionsClosed, setPredictionsClosed] = useState<boolean>(false);
 
   const predictions = useAppSelector(selectPredictions);
   const dispatch = useAppDispatch();
@@ -125,6 +127,11 @@ const PredictPlayoffs = () => {
   };
 
   useEffect(() => {
+    const currentTime = moment();
+    if (currentTime.isAfter(GROUP_PREDICTIONS_CLOSE)) {
+      setPredictionsClosed(true);
+    }
+
     if (games) {
       setQuarters(
         games
@@ -135,6 +142,19 @@ const PredictPlayoffs = () => {
       setFinal(calcFinal());
     }
   }, [games, predictions]);
+
+  if (predictionsClosed) {
+    return (
+      <div className="flex flex-col justify-center items-center min-h-screen text-center px-3">
+        <h1 className="text-4xl font-bold font-novaMono">
+          Predictions are currently closed!
+        </h1>
+        <h2 className="text-sm font-novaMono">
+          Bracket stage predictions will open after the group stage is finished.
+        </h2>
+      </div>
+    );
+  }
 
   return (
     <motion.div
