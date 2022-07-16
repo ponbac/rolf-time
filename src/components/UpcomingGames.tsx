@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { selectPredictions } from "../features/predict/predictSlice";
-import { queryClient } from "../main";
 import { fetchGames } from "../utils/dataFetcher";
 import { useAppSelector } from "../utils/store";
+import { findPrediction } from "../utils/utils";
 import LoadingIndicator from "./LoadingIndicator";
 import TeamFlag from "./TeamFlag";
 
@@ -22,16 +22,6 @@ const UpcomingGame = (props: UpcomingGameProps) => {
   );
 
   const userPredictions = useAppSelector(selectPredictions);
-
-  const findPrediction = (g: Game) => {
-    const group = userPredictions.find((p) => p.groupId === g.groupId);
-    if (group) {
-      const prediction = group.games.find((p) => p.id === g.id);
-      if (prediction) {
-        return prediction;
-      }
-    }
-  };
 
   const resultTextColor = () => {
     if (prediction && game?.finished) {
@@ -66,7 +56,7 @@ const UpcomingGame = (props: UpcomingGameProps) => {
 
     setGame(nextGame);
     setDate(moment(nextGame.date).format("dddd DD/MM, HH:mm"));
-    setPrediction(findPrediction(nextGame));
+    setPrediction(findPrediction(nextGame, userPredictions));
   }, [games]);
 
   if (!game) {
