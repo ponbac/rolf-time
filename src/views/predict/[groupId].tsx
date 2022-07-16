@@ -10,7 +10,7 @@ import {
   savePredictions,
   selectPredictions,
 } from "../../features/predict/predictSlice";
-import { PREDICTIONS_OPEN_UNTIL } from "../../utils/constants";
+import { GROUP_PREDICTIONS_CLOSE } from "../../utils/constants";
 import LoadingIndicator from "../../components/LoadingIndicator";
 
 export const TeamBlock: FC<{
@@ -43,9 +43,11 @@ export const TeamBlock: FC<{
   );
 };
 
-const GameBlock: FC<{ game: Game }> = ({ game }) => {
-  let params = useParams();
-  const id = params.id;
+type GameBlockProps = {
+  game: Game;
+};
+export const GameBlock = (props: GameBlockProps) => {
+  let { game } = props;
 
   let date = moment(game.date).format("dddd DD/MM, HH:mm");
 
@@ -113,7 +115,7 @@ const GameBlock: FC<{ game: Game }> = ({ game }) => {
 
     dispatch(
       predictGame({
-        groupId: id,
+        groupId: game.groupId,
         gamePrediction: {
           id: game.id,
           homeGoals: homeGoals,
@@ -124,10 +126,10 @@ const GameBlock: FC<{ game: Game }> = ({ game }) => {
     );
   }, [homeGoals, awayGoals]);
 
-  // Show saved predictions as presets if they exist
   useEffect(() => {
+    // Show saved predictions as presets if they exist
     const groupPrediction = predictions.find(
-      (g) => g.groupId === id?.toUpperCase()
+      (g) => g.groupId === game.groupId.toUpperCase()
     );
     if (groupPrediction) {
       const gamePrediction = groupPrediction.games.find(
@@ -196,7 +198,7 @@ const GroupBlock: FC<{}> = ({}) => {
 
   useEffect(() => {
     const currentTime = moment();
-    if (currentTime.isAfter(PREDICTIONS_OPEN_UNTIL)) {
+    if (currentTime.isAfter(GROUP_PREDICTIONS_CLOSE)) {
       setPredictionsClosed(true);
     }
   }, []);
@@ -242,7 +244,7 @@ const GroupBlock: FC<{}> = ({}) => {
         className="flex flex-col items-center justify-center gap-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.5 }}
+        transition={{ duration: 1.0 }}
         key={group?.id}
       >
         <h1 className="text-4xl font-bold" key={"header-" + group?.id}>

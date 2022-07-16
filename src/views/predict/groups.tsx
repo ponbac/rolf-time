@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 import LoadingIndicator from "../../components/LoadingIndicator";
 import ReorderableGroup from "../../components/ReorderableGroup";
 import { savePredictions } from "../../features/predict/predictSlice";
-import { PREDICTIONS_OPEN_UNTIL } from "../../utils/constants";
+import { GROUP_PREDICTIONS_CLOSE } from "../../utils/constants";
 import { fetchGroups } from "../../utils/dataFetcher";
 import { useAppDispatch } from "../../utils/store";
 
-const Predict: React.FC<{}> = () => {
+const PredictGroups = () => {
   //const { groups, isLoading, isError } = useGroups();
   const [groups, setGroups] = useState<Group[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -21,7 +21,7 @@ const Predict: React.FC<{}> = () => {
 
   useEffect(() => {
     const currentTime = moment();
-    if (currentTime.isAfter(PREDICTIONS_OPEN_UNTIL)) {
+    if (currentTime.isAfter(GROUP_PREDICTIONS_CLOSE)) {
       setPredictionsClosed(true);
     }
 
@@ -78,4 +78,4 @@ const Predict: React.FC<{}> = () => {
   );
 };
 
-export default Predict;
+export default PredictGroups;

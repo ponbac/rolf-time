@@ -7,7 +7,7 @@ import "./index.css";
 import store from "./utils/store";
 import Home from "./views";
 import HallOfFame from "./views/halloffame";
-import Predict from "./views/predict/groups";
+import PredictGroups from "./views/predict/groups";
 import GroupBlock from "./views/predict/[groupId]";
 import Schedule from "./views/schedule";
 import UpdateProfile from "./views/profile/update";
@@ -15,6 +15,8 @@ import UserProfile from "./views/profile/[user]";
 import UserPredictions from "./views/profile/predictions";
 import GameView from "./views/[game]";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { PLAYOFF_PREDICTIONS_OPEN } from "./utils/constants";
+import PredictPlayoffs from "./views/predict/playoffs";
 
 export const queryClient = new QueryClient();
 
@@ -34,7 +36,16 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                 element={<UserPredictions />}
               />
               <Route path="/game/:id" element={<GameView />} />
-              <Route path="predict" element={<Predict />} />
+              <Route
+                path="predict"
+                element={
+                  PLAYOFF_PREDICTIONS_OPEN ? (
+                    <PredictPlayoffs />
+                  ) : (
+                    <PredictGroups />
+                  )
+                }
+              />
               <Route path="predict/group/:id" element={<GroupBlock />} />
               <Route path="schedule" element={<Schedule />} />
               <Route path="halloffame" element={<HallOfFame />} />
