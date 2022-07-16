@@ -13,11 +13,10 @@ import Schedule from "./views/schedule";
 import UpdateProfile from "./views/profile/update";
 import UserProfile from "./views/profile/[user]";
 import UserPredictions from "./views/profile/predictions";
-import LoginView from "./views/login";
 import GameView from "./views/[game]";
 import { QueryClient, QueryClientProvider } from "react-query";
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

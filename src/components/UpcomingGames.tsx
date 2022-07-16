@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { selectPredictions } from "../features/predict/predictSlice";
+import { queryClient } from "../main";
 import { fetchGames } from "../utils/dataFetcher";
 import { useAppSelector } from "../utils/store";
 import LoadingIndicator from "./LoadingIndicator";
@@ -66,7 +67,7 @@ const UpcomingGame = (props: UpcomingGameProps) => {
     setGame(nextGame);
     setDate(moment(nextGame.date).format("dddd DD/MM, HH:mm"));
     setPrediction(findPrediction(nextGame));
-  }, [game]);
+  }, [games]);
 
   if (!game) {
     return <LoadingIndicator />;

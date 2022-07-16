@@ -1,10 +1,9 @@
 import { motion } from "framer-motion";
-import { FC } from "react";
 import Header from "../components/Header";
 import Leaderboard from "../components/Leaderboard";
 import UpcomingGames from "../components/UpcomingGames";
 
-const Home: FC<{}> = () => {
+const Home = () => {
   return (
     <motion.div
       className="flex flex-col flex-1"
