@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import LoadingIndicator from "../components/LoadingIndicator";
 import TeamFlag from "../components/TeamFlag";
 import { fetchAllUsers, fetchGame } from "../utils/dataFetcher";
+import { findPrediction } from "../utils/utils";
 
 type GameBoxProps = {
   game: Game;
@@ -56,18 +57,6 @@ const PredictionsList = (props: PredictionsListProps) => {
       undefined
     );
 
-    const findPrediction = (g: Game) => {
-      if (user.predictions) {
-        const group = user.predictions.find((p) => p.groupId === g.groupId);
-        if (group) {
-          const prediction = group.games.find((p) => p.id === g.id);
-          if (prediction) {
-            return prediction;
-          }
-        }
-      }
-    };
-
     const resultBgColor = () => {
       if (prediction && game.finished) {
         game.winner = game.winner == null ? -1 : game.winner;
@@ -88,8 +77,10 @@ const PredictionsList = (props: PredictionsListProps) => {
     };
 
     useEffect(() => {
-      const prediction = findPrediction(game);
-      setPrediction(prediction);
+      if (user.predictions) {
+        const prediction = findPrediction(game, user.predictions);
+        setPrediction(prediction);
+      }
     }, []);
 
     return (

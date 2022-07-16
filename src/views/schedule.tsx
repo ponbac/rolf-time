@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import LoadingIndicator from "../components/LoadingIndicator";
 import TeamFlag from "../components/TeamFlag";
 import { selectIsAdmin } from "../features/auth/authSlice";
+import { TBD_TEAM } from "../utils/constants";
 import { fetchGames, updateGame } from "../utils/dataFetcher";
 import { useAppSelector } from "../utils/store";
 
@@ -124,6 +125,13 @@ type GameBlockProps = {
 };
 const GameBlock = (props: GameBlockProps) => {
   const { game, adminMode = false } = props;
+
+  if (game.homeTeam === null) {
+    game.homeTeam = TBD_TEAM;
+  }
+  if (game.awayTeam === null) {
+    game.awayTeam = TBD_TEAM;
+  }
 
   let date = moment(game.date).format("dddd DD/MM, HH:mm");
 
