@@ -10,7 +10,7 @@ import {
   savePredictions,
   selectPredictions,
 } from "../../features/predict/predictSlice";
-import { GROUP_PREDICTIONS_CLOSE } from "../../utils/constants";
+import { GROUP_PREDICTIONS_CLOSE, TBD_TEAM } from "../../utils/constants";
 import LoadingIndicator from "../../components/LoadingIndicator";
 
 export const TeamBlock: FC<{
@@ -48,6 +48,13 @@ type GameBlockProps = {
 };
 export const GameBlock = (props: GameBlockProps) => {
   let { game } = props;
+
+  if (game.homeTeam === null) {
+    game.homeTeam = TBD_TEAM;
+  }
+  if (game.awayTeam === null) {
+    game.awayTeam = TBD_TEAM;
+  }
 
   let date = moment(game.date).format("dddd DD/MM, HH:mm");
 

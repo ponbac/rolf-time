@@ -7,7 +7,7 @@ import {
   savePredictions,
   selectPredictions,
 } from "../../features/predict/predictSlice";
-import { GROUP_PREDICTIONS_CLOSE } from "../../utils/constants";
+import { PLAYOFF_PREDICTIONS_CLOSE } from "../../utils/constants";
 import { fetchGames } from "../../utils/dataFetcher";
 import { useAppDispatch, useAppSelector } from "../../utils/store";
 import { findPrediction } from "../../utils/utils";
@@ -128,7 +128,7 @@ const PredictPlayoffs = () => {
 
   useEffect(() => {
     const currentTime = moment();
-    if (currentTime.isAfter(GROUP_PREDICTIONS_CLOSE)) {
+    if (currentTime.isAfter(PLAYOFF_PREDICTIONS_CLOSE)) {
       setPredictionsClosed(true);
     }
 
