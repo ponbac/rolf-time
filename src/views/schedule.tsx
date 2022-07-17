@@ -10,6 +10,8 @@ import { selectIsAdmin } from "../features/auth/authSlice";
 import { TBD_TEAM } from "../utils/constants";
 import { fetchGames, updateGame } from "../utils/dataFetcher";
 import { useAppSelector } from "../utils/store";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 type TeamBlockProps = {
   team: Team;
@@ -259,7 +261,13 @@ const Schedule = () => {
             <div className="p-2 flex items-center justify-center bg-secondary/40 hover:bg-secondary/80 transition-all rounded-xl text-center">
               <button className="font-bold">
                 {showFinished ? "Hide" : "Show"} played games{" "}
-                <span className="">{showFinished ? <></> : <>&#8964;</>}</span>
+                <span className="">
+                  {showFinished ? (
+                    <FontAwesomeIcon icon={faAngleUp} />
+                  ) : (
+                    <FontAwesomeIcon icon={faAngleDown} />
+                  )}
+                </span>
               </button>
             </div>
           }
