@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { selectPredictions } from "../features/predict/predictSlice";
+import { TBD_TEAM } from "../utils/constants";
 import { fetchGames } from "../utils/dataFetcher";
 import { useAppSelector } from "../utils/store";
 import { findPrediction } from "../utils/utils";
@@ -53,6 +54,13 @@ const UpcomingGame = (props: UpcomingGameProps) => {
 
     const nextGame = sortedGames[nextGameIndex + offset];
     //const nextGame = sortedGames[4 + offset];
+
+    if (nextGame.homeTeam === null) {
+      nextGame.homeTeam = TBD_TEAM;
+    }
+    if (nextGame.awayTeam === null) {
+      nextGame.awayTeam = TBD_TEAM;
+    }
 
     setGame(nextGame);
     setDate(moment(nextGame.date).format("dddd DD/MM, HH:mm"));
