@@ -17,6 +17,7 @@ import GameView from "./views/[game]";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { PLAYOFF_PREDICTIONS_OPEN } from "./utils/constants";
 import PredictPlayoffs from "./views/predict/playoffs";
+import moment from "moment";
 
 export const queryClient = new QueryClient();
 
@@ -39,7 +40,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               <Route
                 path="predict"
                 element={
-                  PLAYOFF_PREDICTIONS_OPEN ? (
+                  moment().isAfter(PLAYOFF_PREDICTIONS_OPEN) ? (
                     <PredictPlayoffs />
                   ) : (
                     <PredictGroups />
