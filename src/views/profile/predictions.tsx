@@ -8,6 +8,8 @@ import LoadingIndicator from "../../components/LoadingIndicator";
 import { useQuery } from "react-query";
 import { TBD_TEAM } from "../../utils/constants";
 import { calcFinal, calcSemifinals } from "../../utils/utils";
+import Collapsible from "react-collapsible";
+import CollapsibleContainer from "../../components/CollapsibleContainer";
 
 type PredictedGroupProps = {
   groupName: string;
@@ -113,14 +115,8 @@ const PredictedGames = (props: PredictedGamesProps) => {
     };
 
     return (
-      <Link
-        to={
-          game.homeTeam.id == -1 || game.awayTeam.id == -1
-            ? "/schedule"
-            : `/game/${game.id}`
-        }
-      >
-        <div className="p-2 hover:bg-gray-700/70 rounded-xl transition-all font-novaMono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-10 lg:mb-0">
+      <Link to={`/game/${game.id}`}>
+        <div className="p-2 hover:bg-gray-700/70 rounded-xl transition-all font-novaMono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-6 lg:mb-0">
           <TeamBlock
             team={game.homeTeam}
             away={false}
@@ -151,22 +147,21 @@ const PredictedGames = (props: PredictedGamesProps) => {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="py-2 space-y-8">
+      <div className="py-2 space-y-5">
         {predictions.map((p) => (
-          <div
-            className="flex flex-col  justify-center items-center"
-            key={p.groupId}
-          >
-            <p className="text-3xl font-bold font-novaMono">
-              {parseName(p.groupId)}
-            </p>
-            {p.games.map((gamePrediction) => (
-              <PredictionItem
-                prediction={gamePrediction}
-                key={gamePrediction.id.toString()}
-              />
-            ))}
-          </div>
+          <CollapsibleContainer title={parseName(p.groupId) ?? ""} open={false}>
+            <div
+              className="flex flex-col justify-center items-center"
+              key={p.groupId}
+            >
+              {p.games.map((gamePrediction) => (
+                <PredictionItem
+                  prediction={gamePrediction}
+                  key={gamePrediction.id.toString()}
+                />
+              ))}
+            </div>
+          </CollapsibleContainer>
         ))}
       </div>
     </div>
@@ -220,7 +215,7 @@ const UserPredictions = () => {
   return (
     <div className="min-h-screen font-novaMono flex flex-col items-center justify-center my-6">
       <motion.div
-        className=""
+        className="flex flex-col items-center justify-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5 }}
@@ -235,7 +230,7 @@ const UserPredictions = () => {
         </div>
         {predictions && (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 my-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-12 mt-8">
               {predictions.map((p) => {
                 // then it's not a group
                 if (p.groupId.length > 1) {
@@ -252,6 +247,7 @@ const UserPredictions = () => {
               })}
             </div>
             <div className="flex flex-col justify-center items-center pt-8">
+              <h1 className="text-5xl font-bold mb-2">Games</h1>
               <PredictedGames predictions={predictions} />
             </div>
           </>

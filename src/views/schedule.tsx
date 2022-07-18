@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import moment from "moment";
-import { FC, useEffect, useState } from "react";
-import Collapsible from "react-collapsible";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import LoadingIndicator from "../components/LoadingIndicator";
@@ -10,8 +9,7 @@ import { selectIsAdmin } from "../features/auth/authSlice";
 import { TBD_TEAM } from "../utils/constants";
 import { fetchGames, updateGame } from "../utils/dataFetcher";
 import { useAppSelector } from "../utils/store";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import CollapsibleContainer from "../components/CollapsibleContainer";
 
 type TeamBlockProps = {
   team: Team;
@@ -201,7 +199,6 @@ const GameBlock = (props: GameBlockProps) => {
 const Schedule = () => {
   const { data: games, isLoading, error } = useQuery("games", fetchGames);
   const [finishedGames, setFinishedGames] = useState<Game[]>([]);
-  const [showFinished, setShowFinished] = useState<boolean>(false);
   const [upcomingGames, setUpcomingGames] = useState<Game[]>([]);
   const [adminMode, setAdminMode] = useState<boolean>(false);
   const isAdmin = useAppSelector(selectIsAdmin);
@@ -248,29 +245,15 @@ const Schedule = () => {
             Toggle edit
           </button>
         )}
-        <Collapsible
-          onTriggerOpening={() => setShowFinished(true)}
-          onTriggerClosing={() => setShowFinished(false)}
-          trigger={
-            <div className="p-2 flex items-center justify-center bg-secondary/40 hover:bg-secondary/80 transition-all rounded-xl text-center">
-              <button className="font-bold">
-                {showFinished ? "Hide" : "Show"} played games{" "}
-                <span className="">
-                  {showFinished ? (
-                    <FontAwesomeIcon icon={faAngleUp} />
-                  ) : (
-                    <FontAwesomeIcon icon={faAngleDown} />
-                  )}
-                </span>
-              </button>
-            </div>
-          }
-          triggerStyle={{ textAlign: "center" }}
+        <CollapsibleContainer
+          title={"View played games"}
+          titleClassName="font-bold"
+          open={false}
         >
           {finishedGames.map((game) => (
             <GameBlock key={game.id} game={game} adminMode={adminMode} />
           ))}
-        </Collapsible>
+        </CollapsibleContainer>
         {upcomingGames.map((game) => (
           <GameBlock key={game.id} game={game} adminMode={adminMode} />
         ))}
