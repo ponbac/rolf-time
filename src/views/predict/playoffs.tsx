@@ -150,7 +150,7 @@ const PredictPlayoffs = () => {
           Predictions are currently closed!
         </h1>
         <h2 className="text-sm font-novaMono">
-          Bracket stage predictions will open after the group stage is finished.
+          All you can do is wait for the final results.
         </h2>
       </div>
     );
@@ -163,9 +163,17 @@ const PredictPlayoffs = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <h1 className="text-center text-7xl font-bold font-novaMono pb-3 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+      <h1 className="text-center text-7xl font-bold font-novaMono pb-3 pt-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
         Playoffs
       </h1>
+      <h2 className=" text-lg px-2 text-center font-bold">
+        Correct winner grants 6 points in quarters, 8 points in semis and 10
+        points in the final. <br /> +3 for correct score. <br />{" "}
+        <span className="italic text-base">
+          (Score includes potential goals scored after ordinary game time, e.g.
+          penalty shoot-out)
+        </span>
+      </h2>
       {quarters.length > 0 && (
         <div className="flex flex-col items-center justify-center">
           <h2 className="text-4xl font-bold mb-4">Quarters</h2>
@@ -202,7 +210,7 @@ const PredictPlayoffs = () => {
       )}
       <Link to={"/"}>
         <button
-          className="hover:cursor-pointer text-center bg-gradient-to-r from-primary to-secondary text-white transition-all w-32 hover:w-36 hover:text-gray-400 p-2 rounded-xl font-bold"
+          className="hover:cursor-pointer text-center bg-gradient-to-r from-primary to-secondary text-white transition-all w-32 hover:w-36 hover:text-gray-400 p-2 mb-2 rounded-xl font-bold"
           onClick={() => dispatch(savePredictions())}
         >
           Save
