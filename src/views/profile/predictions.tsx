@@ -149,11 +149,12 @@ const PredictedGames = (props: PredictedGamesProps) => {
     <div className="flex flex-col items-center">
       <div className="py-2 space-y-5">
         {predictions.map((p) => (
-          <CollapsibleContainer title={parseName(p.groupId) ?? ""} open={false}>
-            <div
-              className="flex flex-col justify-center items-center"
-              key={p.groupId}
-            >
+          <CollapsibleContainer
+            title={parseName(p.groupId) ?? ""}
+            open={false}
+            key={p.groupId}
+          >
+            <div className="flex flex-col justify-center items-center">
               {p.games.map((gamePrediction) => (
                 <PredictionItem
                   prediction={gamePrediction}
