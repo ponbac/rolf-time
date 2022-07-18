@@ -7,6 +7,7 @@ import { TeamBlock } from "../predict/[groupId]";
 import LoadingIndicator from "../../components/LoadingIndicator";
 import { useQuery } from "react-query";
 import { TBD_TEAM } from "../../utils/constants";
+import { calcFinal, calcSemifinals } from "../../utils/utils";
 
 type PredictedGroupProps = {
   groupName: string;
@@ -43,6 +44,7 @@ type PredictedGamesProps = {
 const PredictedGames = (props: PredictedGamesProps) => {
   const { predictions } = props;
   const { data: games } = useQuery("games", fetchGames);
+  const [predictedGames, setPredictedGames] = useState<Game[]>([]);
 
   const parseName = (groupName: string) => {
     if (groupName.length == 1) {
@@ -56,6 +58,23 @@ const PredictedGames = (props: PredictedGamesProps) => {
     }
   };
 
+  // Calculates semis and final based on quarters predictions
+  useEffect(() => {
+    if (games) {
+      const quarters = games
+        .filter((game) => game.groupId === "QUARTERS")
+        .sort((a, b) => a.date.localeCompare(b.date));
+      const semis = calcSemifinals(quarters, predictions);
+      const final = calcFinal(semis, predictions);
+
+      setPredictedGames(
+        games
+          .filter((game) => game.groupId != "SEMIS" && game.groupId != "FINAL")
+          .concat(semis, final)
+      );
+    }
+  }, [games]);
+
   if (!games) {
     return <LoadingIndicator />;
   }
@@ -65,7 +84,7 @@ const PredictedGames = (props: PredictedGamesProps) => {
     key: string;
   }) => {
     const { prediction } = props;
-    let game = games.find((g) => g.id === props.prediction.id);
+    let game = predictedGames.find((g) => g.id === props.prediction.id);
 
     if (!game) {
       return null;
@@ -96,7 +115,7 @@ const PredictedGames = (props: PredictedGamesProps) => {
     return (
       <Link
         to={
-          (game.homeTeam.id == -1 || game.awayTeam.id == -1)
+          game.homeTeam.id == -1 || game.awayTeam.id == -1
             ? "/schedule"
             : `/game/${game.id}`
         }

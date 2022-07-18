@@ -77,7 +77,7 @@ const Navbar: FC<{}> = ({}) => {
           <div
             className={`${
               activeItem == menuItem ? "text-blue-400" : ""
-            } flex flex-col items-center hover:cursor-pointer hover:italic`}
+            } flex flex-col items-center hover:cursor-pointer hover:text-blue-300`}
           >
             <FontAwesomeIcon icon={icon} className="text-xl p-1" />
             <p className="text-white text-xs font-novaMono font-bold">{text}</p>
@@ -128,7 +128,7 @@ const Navbar: FC<{}> = ({}) => {
           />
           <button
             onClick={handleSignOutClick}
-            className="flex flex-col items-center hover:cursor-pointer hover:italic"
+            className="flex flex-col items-center hover:cursor-pointer hover:text-blue-300"
           >
             <FontAwesomeIcon
               icon={faArrowRightFromBracket}
@@ -207,7 +207,7 @@ const Navbar: FC<{}> = ({}) => {
       />
       <button
         onClick={handleSignOutClick}
-        className="absolute bottom-3 mt-4 flex flex-col items-center hover:cursor-pointer hover:italic"
+        className="absolute bottom-3 mt-4 flex flex-col items-center hover:cursor-pointer hover:text-blue-300"
       >
         <FontAwesomeIcon
           icon={faArrowRightFromBracket}

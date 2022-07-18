@@ -182,13 +182,7 @@ const GameBlock = (props: GameBlockProps) => {
   }
 
   return (
-    <Link
-      to={
-        game.homeTeam.id == -1 || game.awayTeam.id == -1
-          ? "/schedule"
-          : `/game/${game.id}`
-      }
-    >
+    <Link to={`/game/${game.id}`}>
       <div className=" p-2 font-novaMono flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-8 mb-6 lg:mb-0 hover:cursor-pointer hover:bg-gray-700/70 rounded-xl transition-all">
         <TeamBlock
           team={game.homeTeam}

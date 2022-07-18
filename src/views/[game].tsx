@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import { Link, useParams } from "react-router-dom";
 import LoadingIndicator from "../components/LoadingIndicator";
 import TeamFlag from "../components/TeamFlag";
+import { TBD_TEAM } from "../utils/constants";
 import { fetchAllUsers, fetchGame } from "../utils/dataFetcher";
 import { findPrediction } from "../utils/utils";
 
@@ -13,6 +14,13 @@ type GameBoxProps = {
 };
 const GameBox = (props: GameBoxProps) => {
   const { game } = props;
+
+  if (game.homeTeam === null) {
+    game.homeTeam = TBD_TEAM;
+  }
+  if (game.awayTeam === null) {
+    game.awayTeam = TBD_TEAM;
+  }
 
   return (
     <div className="flex flex-col items-center justify-center font-novaMono space-y-2">
