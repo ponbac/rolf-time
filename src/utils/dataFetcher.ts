@@ -13,6 +13,15 @@ const SUPABASE = createClient(
   }
 );
 
+const fetchGroupResults = async (): Promise<GroupResult[]> => {
+  const { data, error } = await SUPABASE.from("groups").select();
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+
 const fetchGroups = async (): Promise<Group[]> => {
   const groupNames = GROUPS;
   let groups: Group[] = [];
@@ -263,6 +272,7 @@ export {
   SUPABASE,
   fetchGroup,
   fetchGroups,
+  fetchGroupResults,
   fetchGame,
   fetchGames,
   getCurrentUser,

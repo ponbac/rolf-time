@@ -4,6 +4,11 @@ type Group = {
   games: Game[];
 };
 
+type GroupResult = {
+  id: string;
+  results: number[];
+};
+
 type Team = {
   id: number;
   name: string;

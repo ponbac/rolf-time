@@ -1,29 +1,49 @@
 import { motion } from "framer-motion";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchGames, fetchUser } from "../../utils/dataFetcher";
+import {
+  fetchGames,
+  fetchGroupResults,
+  fetchUser,
+} from "../../utils/dataFetcher";
 import TeamFlag from "../../components/TeamFlag";
 import { TeamBlock } from "../predict/[groupId]";
 import LoadingIndicator from "../../components/LoadingIndicator";
 import { useQuery } from "react-query";
 import { TBD_TEAM } from "../../utils/constants";
 import { calcFinal, calcSemifinals } from "../../utils/utils";
-import Collapsible from "react-collapsible";
 import CollapsibleContainer from "../../components/CollapsibleContainer";
 
 type PredictedGroupProps = {
   groupName: string;
   teams: Team[];
+  result: number[] | undefined;
 };
 const PredictedGroup = (props: PredictedGroupProps) => {
-  const { teams, groupName } = props;
+  const { teams, result, groupName } = props;
 
-  const TeamItem = (props: { team: Team; placing: number; key: string }) => {
+  const TeamItem = (props: { team: Team; placing: number }) => {
+    const { team, placing } = props;
+
+    const correctPlacing = () => {
+      if (result) {
+        if (result[placing - 1] == team.id) {
+          return true;
+        }
+      }
+
+      return false;
+    };
+
     return (
-      <div className="gap-2 w-64 hover:bg-primary/30 transition-all mx-2 flex flex-row items-center font-novaMono bg-gray-400/30 backdrop-blur-sm py-2 px-4 rounded-lg">
-        <p className={"font-bold"}>{props.placing}.</p>
-        <TeamFlag team={props.team} width="2.0rem" />
-        <h1 className="font-bold">{props.team.name}</h1>
+      <div
+        className={`${
+          correctPlacing() ? "bg-green-500/40" : "bg-gray-400/30"
+        } gap-2 w-64 mx-2 flex flex-row items-center font-novaMono  backdrop-blur-sm py-2 px-4 rounded-lg`}
+      >
+        <p className={"font-bold"}>{placing}.</p>
+        <TeamFlag team={team} width="2.0rem" />
+        <h1 className="font-bold">{team.name}</h1>
       </div>
     );
   };
@@ -178,6 +198,7 @@ const UserPredictions = () => {
 
   const [predictions, setPredictions] = useState<GroupPrediction[]>();
   const [user, setUser] = useState<PlayerUser>();
+  const { data: groupResults } = useQuery("groupResults", fetchGroupResults);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -242,6 +263,9 @@ const UserPredictions = () => {
                   <PredictedGroup
                     groupName={p.groupId}
                     teams={p.result}
+                    result={
+                      groupResults?.find((g) => g.id === p.groupId)?.results
+                    }
                     key={p.groupId}
                   />
                 );
