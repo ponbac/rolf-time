@@ -109,6 +109,10 @@ const PredictedGames = (props: PredictedGamesProps) => {
   }) => {
     const { prediction } = props;
     let game = predictedGames.find((g) => g.id === props.prediction.id);
+    let playedGame = games.find((g) => g.id === props.prediction.id);
+
+    const [pointsText, setPointsText] = useState<string>("");
+    const [pointsStyle, setPointsStyle] = useState<string>("");
 
     if (!game) {
       return null;
@@ -121,13 +125,16 @@ const PredictedGames = (props: PredictedGamesProps) => {
       game.awayTeam = TBD_TEAM;
     }
 
-    game.winner = game.winner == null ? -1 : game.winner;
-    const correctPrediction = prediction.winner == game.winner;
+    if (playedGame) {
+      playedGame.winner = playedGame.winner == null ? -1 : playedGame.winner;
+    }
+    const correctPrediction = prediction.winner == playedGame?.winner;
     const correctScore =
-      prediction.homeGoals == game.homeGoals &&
-      prediction.awayGoals == game.awayGoals;
+      prediction.homeGoals == playedGame?.homeGoals &&
+      prediction.awayGoals == playedGame?.awayGoals;
+
     const resultTextColor = () => {
-      if (correctScore) {
+      if (correctScore && correctPrediction) {
         return "text-blue-400";
       } else if (correctPrediction) {
         return "text-green-400";
@@ -135,6 +142,36 @@ const PredictedGames = (props: PredictedGamesProps) => {
         return "text-red-500";
       }
     };
+    // TODO: should probably have point reward amounts in the database
+    const resultPoints = () => {
+      let points = 0;
+      if (correctPrediction) {
+        if (playedGame?.groupId == "QUARTERS") {
+          points = 6;
+        } else if (playedGame?.groupId == "SEMIS") {
+          points = 8;
+        } else if (playedGame?.groupId == "FINAL") {
+          points = 10;
+        } else {
+          points = 3;
+        }
+
+        if (correctScore) {
+          if ((playedGame?.groupId.length ?? 0) > 1) {
+            points += 3;
+          } else {
+            points += 1;
+          }
+        }
+      }
+
+      return points == 0 ? "" : `+${points}`;
+    };
+
+    useEffect(() => {
+      setPointsText(resultPoints());
+      setPointsStyle(resultTextColor());
+    }, [playedGame]);
 
     return (
       <Link to={`/game/${game.id}`}>
@@ -149,10 +186,9 @@ const PredictedGames = (props: PredictedGamesProps) => {
               <p className="text-2xl font-bold">
                 {prediction.homeGoals} - {prediction.awayGoals}
               </p>
-              {game.finished && (
-                <p className={"text-sm " + resultTextColor()}>
-                  ({game.homeGoals} - {game.awayGoals}){" "}
-                  {correctScore ? "+4" : correctPrediction ? "+3" : ""}
+              {playedGame?.finished && (
+                <p className={"text-sm " + pointsStyle}>
+                  ({playedGame.homeGoals} - {playedGame.awayGoals}) {pointsText}
                 </p>
               )}
             </div>
