@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import "./index.css";
 import store from "./utils/store";
-import Home from "./views";
+import Home from "./views/home";
 import HallOfFame from "./views/halloffame";
 import PredictGroups from "./views/predict/groups";
 import GroupBlock from "./views/predict/[groupId]";

@@ -101,7 +101,7 @@ const Navbar: FC<{}> = ({}) => {
             height={60}
           />
         </Link>
-        <div className="flex flex-row flex-1 gap-6 justify-evenly pl-3">
+        <div className="flex flex-row flex-1 gap-3 sm:gap-6 justify-evenly pl-3">
           <MobileLinkIcon
             to="/"
             icon={faHouse}
