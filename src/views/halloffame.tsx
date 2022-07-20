@@ -32,6 +32,11 @@ const HallOfFame: FC<{}> = () => {
       <Header text="HALL OF FAME" />
       <div className="flex flex-col flex-0 justify-center items-center pt-20">
         <HoFItem />
+        <img
+          className="w-min mt-8"
+          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/94.gif"
+          alt="Gengar"
+        />
       </div>
     </motion.div>
   );
