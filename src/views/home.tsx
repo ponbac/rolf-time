@@ -1,9 +1,14 @@
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import Header from "../components/Header";
 import Leaderboard from "../components/Leaderboard";
 import UpcomingGames from "../components/UpcomingGames";
 
 const Home = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <motion.div
       className="flex flex-col flex-1"
