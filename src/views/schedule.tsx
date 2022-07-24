@@ -10,6 +10,7 @@ import { TBD_TEAM } from "../utils/constants";
 import { fetchGames, updateGame } from "../utils/dataFetcher";
 import { useAppSelector } from "../utils/store";
 import CollapsibleContainer from "../components/CollapsibleContainer";
+import Header from "../components/Header";
 
 type TeamBlockProps = {
   team: Team;
@@ -227,16 +228,14 @@ const Schedule = () => {
   }
 
   return (
-    <div className="min-h-screen font-novaMono flex flex-col items-center justify-center my-10">
+    <div className="font-novaMono flex flex-col items-center justify-center mb-10">
       <motion.div
         className="flex flex-col items-center justify-center gap-2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-6xl font-bold font-novaMono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary mb-2">
-          Schedule
-        </h1>
+        <Header text={"SCHEDULE"} className={"mb-2 lg:mb-4"} />
         {isAdmin && (
           <button
             className="bg-secondary/40 p-2 rounded-xl font-bold hover:bg-secondary/80 transition-all text-center"
