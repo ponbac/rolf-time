@@ -120,6 +120,8 @@ const UpcomingGames = () => {
     );
   }
 
+  // TODO: This solution crashes in the edge case where there are still unfinished games
+  //       while no game is left to play according to the games' start time.
   return (
     <>
       {games.filter((g) => !g.finished).length > 0 && (
