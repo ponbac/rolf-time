@@ -121,13 +121,17 @@ const UpcomingGames = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center bg-gray-400/40 w-72 py-3 rounded-3xl font-novaMono">
-      <p className="font-bold text-2xl text-center mb-2">Upcoming:</p>
-      <UpcomingGame games={games} />
-      {games.filter((g) => !g.finished).length > 1 && (
-        <UpcomingGame games={games} offset={1} />
+    <>
+      {games.filter((g) => !g.finished).length > 0 && (
+        <div className="flex flex-col items-center justify-center bg-gray-400/40 w-72 py-3 rounded-3xl font-novaMono">
+          <p className="font-bold text-2xl text-center mb-2">Upcoming:</p>
+          <UpcomingGame games={games} />
+          {games.filter((g) => !g.finished).length > 1 && (
+            <UpcomingGame games={games} offset={1} />
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
